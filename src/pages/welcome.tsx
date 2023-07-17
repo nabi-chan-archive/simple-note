@@ -41,7 +41,7 @@ export default function Welcome() {
           네! 알겠습니다!
         </Link>
         <button
-          onClick={() => signOut({ callbackUrl: "/" })}
+          onClick={() => void signOut({ callbackUrl: "/" })}
           className="btn-btn-error btn btn-sm"
         >
           안녕히계세요...
