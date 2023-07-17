@@ -46,6 +46,8 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    tab           Tab[]
+    article       Article[]
 
     @@map("nextauth_users")
 }
@@ -57,4 +59,36 @@ model VerificationToken {
 
     @@unique([identifier, token])
     @@map("nextauth_verificationtokens")
+}
+
+model Tab {
+    id String @id @default(cuid())
+
+    title String
+    order Int?
+
+    owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+    ownerId String @map("owner_id")
+
+    createdAt DateTime @default(now())
+
+    article Article?
+
+    @@map("tabs")
+}
+
+model Article {
+    id String @id @default(cuid())
+
+    createdAt DateTime @default(now())
+
+    content Json
+
+    owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+    ownerId String @map("owner_id")
+
+    tab   Tab    @relation(fields: [tabId], references: [id], onDelete: Cascade)
+    tabId String @unique @map("tab_id")
+
+    @@map("articles")
 }

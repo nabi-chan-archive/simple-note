@@ -1,13 +1,36 @@
-import { type Tab } from "@/types/Tab";
-import { useState, type ChangeEvent, type MouseEvent } from "react";
+import { api } from "@/utils/api";
+import {
+  useState,
+  type ChangeEvent,
+  type MouseEvent,
+  useMemo,
+  useEffect,
+} from "react";
 
 export function useTabList() {
   const lastSelectedTab = globalThis.localStorage?.getItem("lastSelectedTab");
-  const initialTabList = globalThis.localStorage?.getItem("tabList");
 
-  const [tabList, setTabList] = useState<Tab[]>(() =>
-    initialTabList ? (JSON.parse(initialTabList) as Tab[]) : [{ title: "무제" }]
+  const trpc = api.useContext();
+
+  const { isLoading, data: dataTabList } = api.tab.getTabList.useQuery();
+  const invalidateTabListWhenApiSuccess = {
+    onSuccess: () => void trpc.tab.getTabList.invalidate(),
+  };
+
+  const { mutate: createTabAsync } = api.tab.createTab.useMutation(
+    invalidateTabListWhenApiSuccess
   );
+  const { mutate: removeTabAsync } = api.tab.removeTab.useMutation(
+    invalidateTabListWhenApiSuccess
+  );
+  const { mutate: renameTabAsync } = api.tab.renameTab.useMutation(
+    invalidateTabListWhenApiSuccess
+  );
+
+  const tabList = useMemo(() => {
+    return dataTabList ?? [];
+  }, [dataTabList]);
+
   const [currentTabIndex, setCurrentTabIndex] = useState(
     lastSelectedTab ? Number(lastSelectedTab) : 0
   );
@@ -15,40 +38,27 @@ export function useTabList() {
   const currentTab = tabList[currentTabIndex];
 
   const setCurrentTab = (index: number) => {
-    // globalThis?.localStorage.setItem("lastSelectedTab", String(index));
+    globalThis?.localStorage.setItem("lastSelectedTab", String(index));
     setCurrentTabIndex(index);
   };
 
   const newTab = () => {
-    setTabList((tabs) => {
-      const newTab = [...tabs, { title: "" }];
-      // globalThis.localStorage.setItem("tabList", JSON.stringify(newTab));
-      return newTab;
-    });
+    createTabAsync({ title: "무제" });
     setCurrentTab(tabList.length);
   };
 
   const renameTab =
     (index: number) => (event: ChangeEvent<HTMLInputElement>) => {
-      setTabList((tabList) => {
-        const newTabList = [...tabList];
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        newTabList[index]!.title = event.target.value;
-
-        // globalThis.localStorage.setItem("tabList", JSON.stringify(newTabList));
-        return newTabList;
-      });
+      const currentItem = tabList[index];
+      if (!currentItem) throw new Error("Unexpected TabItem");
+      renameTabAsync({ id: currentItem.id, title: event.target.value });
     };
 
   const removeTab = (index: number) => (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setTabList((tabList) => {
-      const newTabList = [...tabList];
-      newTabList.splice(index, 1);
-
-      // globalThis.localStorage.setItem("tabList", JSON.stringify(newTabList));
-      return newTabList;
-    });
+    const currentItem = tabList[index];
+    if (!currentItem) throw new Error("Unexpected TabItem");
+    removeTabAsync({ id: currentItem.id });
     setCurrentTab(currentTabIndex - 1 < 0 ? 0 : currentTabIndex - 1);
   };
 
@@ -60,11 +70,15 @@ export function useTabList() {
     return index === currentTabIndex;
   };
 
-  if (!initialTabList) {
-    // globalThis.localStorage?.setItem("tabList", JSON.stringify(tabList));
-  }
+  useEffect(() => {
+    if (dataTabList?.length === 0) {
+      createTabAsync({ title: "무제" });
+    }
+  }, [createTabAsync, dataTabList?.length]);
 
   return {
+    isLoading,
+
     tabList,
     currentTab,
     currentTabIndex,
