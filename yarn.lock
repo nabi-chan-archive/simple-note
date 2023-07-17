@@ -2557,6 +2557,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/josa@npm:^3":
+  version: 3.0.2
+  resolution: "@types/josa@npm:3.0.2"
+  checksum: 429256278351e04061e61b85b49e03e51d69935e780c07a8b58517dc7dddfb257479f6ec1a3b2b05b533888ab2f58bd82e77698a1cddecb8c995f4d57e86a23c
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:*, @types/json-schema@npm:^7.0.6, @types/json-schema@npm:^7.0.9":
   version: 7.0.12
   resolution: "@types/json-schema@npm:7.0.12"
@@ -6950,6 +6957,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jongseong@npm:^0.4.2":
+  version: 0.4.2
+  resolution: "jongseong@npm:0.4.2"
+  checksum: e3904d8644f6c4910b34391fa826c831aad4b845ae8f0c01c5f2f4bf5165076c609bdb3e824135ad0692e38852d989236b95538d381878cfbc12197ea0d2bf97
+  languageName: node
+  linkType: hard
+
+"josa@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "josa@npm:3.0.1"
+  dependencies:
+    jongseong: ^0.4.2
+  checksum: 0930d8a1bcffe6778ee6306a4488d9feff84ba8231d97873794a831c5f8bd36dd09e479bd5927114caf19f28a6c04bd1b6ef96e12f482004f4a3aebcc1814970
+  languageName: node
+  linkType: hard
+
 "jose@npm:^4.11.4, jose@npm:^4.14.4":
   version: 4.14.4
   resolution: "jose@npm:4.14.4"
@@ -8165,6 +8188,7 @@ __metadata:
     "@trpc/react-query": ^10.26.0
     "@trpc/server": ^10.26.0
     "@types/eslint": ^8.37.0
+    "@types/josa": ^3
     "@types/node": ^18.16.0
     "@types/prettier": ^2.7.2
     "@types/react": ^18.2.6
@@ -8175,6 +8199,7 @@ __metadata:
     daisyui: ^3.2.1
     eslint: ^8.40.0
     eslint-config-next: ^13.4.2
+    josa: ^3.0.1
     next: ^13.4.10
     next-auth: ^4.22.1
     postcss: ^8.4.21
