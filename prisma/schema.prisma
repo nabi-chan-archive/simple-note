@@ -82,7 +82,7 @@ model Article {
 
     createdAt DateTime @default(now())
 
-    content Json
+    content Json[]
 
     owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
     ownerId String @map("owner_id")

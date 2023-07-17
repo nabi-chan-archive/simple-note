@@ -21,38 +21,33 @@ export default function TabList({
   setTab,
 }: TabListProps) {
   return (
-    <div className="hide-scrollbar overflow-x-auto">
-      <nav className="tabs w-screen flex-nowrap">
-        {tabList.map(({ title }, index) => (
-          <div
-            tabIndex={0}
-            role="button"
-            key={index}
-            onClick={setTab(index)}
-            className={[
-              "tab tab-bordered min-w-[150px] flex-1 flex-nowrap justify-between gap-2",
-              isCurrentTab(index) ? "tab-active" : "",
-            ].join(" ")}
-          >
-            <span className="truncate">{title || "무제"}</span>
-
-            {tabList.length > 1 && (
-              <button
-                className="btn btn-square btn-ghost btn-xs"
-                onClick={removeTab(index)}
-              >
-                <FaXmark />
-              </button>
-            )}
-          </div>
-        ))}
-        <button
-          className="btn btn-square btn-ghost btn-sm ml-2"
-          onClick={newTab}
+    <nav className="hide-scrollbar tabs w-full flex-nowrap overflow-x-auto">
+      {tabList.map(({ title }, index) => (
+        <div
+          tabIndex={0}
+          role="button"
+          key={index}
+          onClick={setTab(index)}
+          className={[
+            "tab tab-bordered min-w-[150px] flex-1 flex-nowrap justify-between gap-2",
+            isCurrentTab(index) ? "tab-active" : "",
+          ].join(" ")}
         >
-          <FaPlus />
-        </button>
-      </nav>
-    </div>
+          <span className="truncate">{title || "무제"}</span>
+
+          {tabList.length > 1 && (
+            <button
+              className="btn btn-square btn-ghost btn-xs"
+              onClick={removeTab(index)}
+            >
+              <FaXmark />
+            </button>
+          )}
+        </div>
+      ))}
+      <button className="btn btn-square btn-ghost btn-sm ml-2" onClick={newTab}>
+        <FaPlus />
+      </button>
+    </nav>
   );
 }

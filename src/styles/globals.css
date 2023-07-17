@@ -23,3 +23,8 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.main .ProseMirror {
+  padding: 0;
+  font-family: monospace;
+}

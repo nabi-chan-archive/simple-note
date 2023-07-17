@@ -9,6 +9,7 @@ import Image from "next/image";
 import TabListSkeleton from "@/components/TabList/Skeleton";
 import { useTabList } from "@/hooks/useTabList";
 import dynamic from "next/dynamic";
+import Editor from "@/components/blocknote/Editor";
 const TabList = dynamic(() => import("@/components/TabList"), {
   loading: TabListSkeleton,
   ssr: false,
@@ -17,14 +18,15 @@ const TabList = dynamic(() => import("@/components/TabList"), {
 export default function Home({
   token,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { tabList, newTab, isCurrentTab, removeTab, setTab } = useTabList();
+  const { tabList, newTab, isCurrentTab, removeTab, setTab, currentTab } =
+    useTabList();
 
   const userName = token?.name ?? "Unknown";
   const handleSignOut = () => void signOut({ callbackUrl: "/" });
 
   return (
-    <>
-      <header className="navbar bg-base-100">
+    <div className="font-mono">
+      <header className="navbar bg-base-100 px-[54px] shadow-md">
         <div className="flex-1">
           <Link href="/#" className="btn btn-ghost btn-sm text-xl normal-case">
             Simple Note
@@ -61,7 +63,7 @@ export default function Home({
           </div>
         </div>
       </header>
-      <main className="min-h-screen">
+      <main className="main mt-4 flex min-h-screen flex-col gap-2 px-[54px]">
         <TabList
           tabList={tabList}
           newTab={newTab}
@@ -69,8 +71,9 @@ export default function Home({
           removeTab={removeTab}
           setTab={setTab}
         />
+        <Editor currentTabId={currentTab?.id} />
       </main>
-    </>
+    </div>
   );
 }
 
