@@ -6,10 +6,19 @@ import { getToken } from "next-auth/jwt";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
+import TabListSkeleton from "@/components/TabList/Skeleton";
+import { useTabList } from "@/hooks/useTabList";
+import dynamic from "next/dynamic";
+const TabList = dynamic(() => import("@/components/TabList"), {
+  loading: TabListSkeleton,
+  ssr: false,
+});
 
 export default function Home({
   token,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { tabList, newTab, isCurrentTab, removeTab, setTab } = useTabList();
+
   const userName = token?.name ?? "Unknown";
   const handleSignOut = () => void signOut({ callbackUrl: "/" });
 
@@ -52,7 +61,15 @@ export default function Home({
           </div>
         </div>
       </header>
-      <main className="flex min-h-screen flex-col items-center justify-center"></main>
+      <main className="min-h-screen">
+        <TabList
+          tabList={tabList}
+          newTab={newTab}
+          isCurrentTab={isCurrentTab}
+          removeTab={removeTab}
+          setTab={setTab}
+        />
+      </main>
     </>
   );
 }
