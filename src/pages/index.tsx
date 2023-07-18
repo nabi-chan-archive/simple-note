@@ -33,7 +33,7 @@ export default function Home({
   return (
     <>
       <Header token={token} />
-      <main className="main mt-4 flex min-h-screen flex-col gap-2 px-[54px]">
+      <main className="main mt-4 flex min-h-screen flex-col gap-4 px-[54px]">
         {isLoading ? (
           <TabListSkeleton />
         ) : (
@@ -49,7 +49,7 @@ export default function Home({
           <EditorSkeleton />
         ) : (
           <Suspense fallback={<EditorSkeleton />}>
-            <Editor currentTabId={currentTab.id} />
+            <Editor currentTab={currentTab} />
           </Suspense>
         )}
       </main>
