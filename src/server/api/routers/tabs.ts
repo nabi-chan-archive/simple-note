@@ -37,6 +37,16 @@ export const tabRouter = createTRPCRouter({
               id: ctx.token?.sub,
             },
           },
+          article: {
+            create: {
+              content: [],
+              owner: {
+                connect: {
+                  id: ctx.token?.sub,
+                },
+              },
+            },
+          },
         },
         select: {
           id: true,
