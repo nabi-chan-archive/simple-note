@@ -1,8 +1,3 @@
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import { getProviders } from "next-auth/react";
+import { createTRPCRouter } from "@/server/api/trpc";
 
-export const authRouter = createTRPCRouter({
-  provider: publicProcedure.query(() => {
-    return getProviders();
-  }),
-});
+export const authRouter = createTRPCRouter({});
