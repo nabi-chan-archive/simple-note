@@ -40,7 +40,7 @@ export function useTabList() {
     return tabList.find((item) => item.id === id) as Tab;
   };
 
-  const currentTab = getTabFromId(currentTabId);
+  const currentTab = getTabFromId(currentTabId) ?? (tabList[0] as Tab);
 
   const setCurrentTab = (tab?: Tab) => {
     if (!tab) throw new Error("No Tab!");
