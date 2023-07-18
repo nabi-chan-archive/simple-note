@@ -1,11 +1,7 @@
+import { type Tab } from "@/types/Tab";
 import { api } from "@/utils/api";
-import {
-  useState,
-  type ChangeEvent,
-  type MouseEvent,
-  useMemo,
-  useEffect,
-} from "react";
+import { useState, type ChangeEvent, type MouseEvent, useEffect } from "react";
+import cuid from "cuid";
 
 export function useTabList() {
   const lastSelectedTab = globalThis.localStorage?.getItem("lastSelectedTab");
@@ -17,62 +13,80 @@ export function useTabList() {
     onSuccess: () => void trpc.tab.getTabList.invalidate(),
   };
 
-  const { mutate: createTabAsync } = api.tab.createTab.useMutation(
+  const { mutateAsync: createTabAsync } = api.tab.createTab.useMutation(
     invalidateTabListWhenApiSuccess
   );
-  const { mutate: removeTabAsync } = api.tab.removeTab.useMutation(
+  const { mutateAsync: removeTabAsync } = api.tab.removeTab.useMutation(
     invalidateTabListWhenApiSuccess
   );
-  const { mutate: renameTabAsync } = api.tab.renameTab.useMutation(
+  const { mutateAsync: renameTabAsync } = api.tab.renameTab.useMutation(
     invalidateTabListWhenApiSuccess
   );
 
-  const tabList = useMemo(() => {
-    return dataTabList ?? [];
+  const [tabList, setTabList] = useState<Tab[]>([]);
+  const [currentTabId, setCurrentTabId] = useState<string>(
+    lastSelectedTab ?? tabList[0]?.id ?? ""
+  );
+
+  useEffect(() => {
+    setTabList(dataTabList ?? []);
   }, [dataTabList]);
 
-  const [currentTabIndex, setCurrentTabIndex] = useState(
-    lastSelectedTab ? Number(lastSelectedTab) : 0
-  );
-
-  const currentTab = tabList[currentTabIndex];
-
-  const setCurrentTab = (index: number) => {
-    globalThis?.localStorage.setItem("lastSelectedTab", String(index));
-    setCurrentTabIndex(index);
+  const getIndexFromTabId = (id: string) => {
+    return tabList.findIndex((item) => item.id === id) ?? -1;
   };
 
-  const newTab = () => {
-    createTabAsync({ title: "무제" });
-    setCurrentTab(tabList.length);
+  const getTabFromId = (id: string) => {
+    return tabList.find((item) => item.id === id);
+  };
+
+  const currentTab = getTabFromId(currentTabId);
+
+  const setCurrentTab = (tab?: Tab) => {
+    if (!tab) throw new Error("No Tab!");
+    globalThis?.localStorage.setItem("lastSelectedTab", tab.id);
+    setCurrentTabId(tab.id);
+  };
+
+  const newTab = async () => {
+    const id = cuid();
+    await createTabAsync({ id, title: "무제" });
+    setTabList((prev) => {
+      const newArray = [...prev, { id, title: "무제" }];
+      setCurrentTab(newArray[newArray.length - 1]);
+      return newArray;
+    });
   };
 
   const renameTab =
-    (index: number) => (event: ChangeEvent<HTMLInputElement>) => {
-      const currentItem = tabList[index];
-      if (!currentItem) throw new Error("Unexpected TabItem");
-      renameTabAsync({ id: currentItem.id, title: event.target.value });
+    (id: string) => async (event: ChangeEvent<HTMLInputElement>) => {
+      await renameTabAsync({ id, title: event.target.value });
     };
 
-  const removeTab = (index: number) => (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    const currentItem = tabList[index];
-    if (!currentItem) throw new Error("Unexpected TabItem");
-    removeTabAsync({ id: currentItem.id });
-    setCurrentTab(currentTabIndex - 1 < 0 ? 0 : currentTabIndex - 1);
+  const removeTab =
+    (id: string) => async (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      const index = getIndexFromTabId(id) ?? 0;
+
+      await removeTabAsync({ id });
+      setTabList((prev) => {
+        const newArray = prev.filter((item) => item.id !== id);
+        setCurrentTab(index - 1 < 0 ? newArray[0] : newArray[index - 1]);
+        return newArray;
+      });
+    };
+
+  const setTab = (id: string) => () => {
+    setCurrentTab(getTabFromId(id));
   };
 
-  const setTab = (index: number) => () => {
-    setCurrentTab(index);
-  };
-
-  const isCurrentTab = (index: number) => {
-    return index === currentTabIndex;
+  const isCurrentTab = (id: string) => {
+    return id === currentTabId;
   };
 
   useEffect(() => {
     if (dataTabList?.length === 0) {
-      createTabAsync({ title: "무제" });
+      void createTabAsync({ title: "무제" });
     }
   }, [createTabAsync, dataTabList?.length]);
 
@@ -81,7 +95,7 @@ export function useTabList() {
 
     tabList,
     currentTab,
-    currentTabIndex,
+    currentTabId,
 
     newTab,
     renameTab,

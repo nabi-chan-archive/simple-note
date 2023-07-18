@@ -21,6 +21,7 @@
     "@trpc/next": "^10.26.0",
     "@trpc/react-query": "^10.26.0",
     "@trpc/server": "^10.26.0",
+    "cuid": "^3.0.0",
     "josa": "^3.0.1",
     "next": "^13.4.10",
     "next-auth": "^4.22.1",

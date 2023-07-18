@@ -13,18 +13,23 @@ export const tabRouter = createTRPCRouter({
         id: true,
         title: true,
       },
+      orderBy: {
+        createdAt: "asc",
+      },
     });
   }),
 
   createTab: protectedProcedure
     .input(
       z.object({
+        id: z.string().cuid().nullish(),
         title: z.string().min(1).max(100),
       })
     )
     .mutation(({ input, ctx }) => {
       return ctx.prisma.tab.create({
         data: {
+          id: input.id ?? undefined,
           title: input.title,
           order: 0,
           owner: {

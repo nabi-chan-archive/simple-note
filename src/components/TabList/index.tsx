@@ -6,10 +6,12 @@ import { type Tab } from "@/types/Tab";
 type TabListProps = {
   tabList: Tab[];
 
-  newTab: () => void;
-  isCurrentTab: (index: number) => boolean;
-  removeTab: (index: number) => (e: MouseEvent<HTMLButtonElement>) => void;
-  setTab: (index: number) => () => void;
+  newTab: () => Promise<void>;
+  isCurrentTab: (id: string) => boolean;
+  removeTab: (
+    id: string
+  ) => (e: MouseEvent<HTMLButtonElement>) => Promise<void>;
+  setTab: (id: string) => () => void;
 };
 
 export default function TabList({
@@ -22,15 +24,15 @@ export default function TabList({
 }: TabListProps) {
   return (
     <nav className="hide-scrollbar tabs w-full flex-nowrap overflow-x-auto">
-      {tabList.map(({ title }, index) => (
+      {tabList.map(({ title, id }) => (
         <div
           tabIndex={0}
           role="button"
-          key={index}
-          onClick={setTab(index)}
+          key={id}
+          onClick={setTab(id)}
           className={[
             "tab tab-bordered min-w-[150px] flex-1 flex-nowrap justify-between gap-2",
-            isCurrentTab(index) ? "tab-active" : "",
+            isCurrentTab(id) ? "tab-active" : "",
           ].join(" ")}
         >
           <span className="truncate">{title || "무제"}</span>
@@ -38,14 +40,17 @@ export default function TabList({
           {tabList.length > 1 && (
             <button
               className="btn btn-square btn-ghost btn-xs"
-              onClick={removeTab(index)}
+              onClick={(e) => void removeTab(id)(e)}
             >
               <FaXmark />
             </button>
           )}
         </div>
       ))}
-      <button className="btn btn-square btn-ghost btn-sm ml-2" onClick={newTab}>
+      <button
+        className="btn btn-square btn-ghost btn-sm ml-2"
+        onClick={() => void newTab()}
+      >
         <FaPlus />
       </button>
     </nav>
