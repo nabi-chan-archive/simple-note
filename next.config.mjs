@@ -12,6 +12,8 @@ const config = {
   images: {
     domains: ["avatars.githubusercontent.com"],
   },
+
+  transpilePackages: ["jotai-devtools"],
 };
 
 export default config;
