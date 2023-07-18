@@ -1,14 +1,10 @@
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import { type JWT } from "next-auth/jwt";
 
-type HeaderProps = {
-  token: JWT | null;
-};
-
-export default function Header({ token }: HeaderProps) {
-  const userName = token?.name ?? "Unknown";
+export default function Header() {
+  const session = useSession();
+  const userName = session.data?.user.name ?? "Unknown";
   const handleSignOut = () => void signOut({ callbackUrl: "/" });
 
   return (
@@ -22,9 +18,9 @@ export default function Header({ token }: HeaderProps) {
         <div className="dropdown-end dropdown">
           <label tabIndex={0} className="avatar btn btn-circle btn-ghost">
             <div className="w-10 rounded-full">
-              {token?.picture ? (
+              {session.data?.user.image ? (
                 <Image
-                  src={token.picture}
+                  src={session.data?.user.image}
                   width={80}
                   height={80}
                   alt="프로필사진"
