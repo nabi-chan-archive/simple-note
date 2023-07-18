@@ -2,6 +2,8 @@ import { type Tab } from "@/types/Tab";
 import { api } from "@/utils/api";
 import { useState, type ChangeEvent, type MouseEvent, useEffect } from "react";
 import cuid from "cuid";
+import { useAtom } from "jotai";
+import TAB_ATOM from "@/state/TAB_ATOM";
 
 export function useTabList() {
   const lastSelectedTab = globalThis.localStorage?.getItem("lastSelectedTab");
@@ -23,14 +25,12 @@ export function useTabList() {
     invalidateTabListWhenApiSuccess
   );
 
-  const [tabList, setTabList] = useState<Tab[]>([]);
-  const [currentTabId, setCurrentTabId] = useState<string>(
-    lastSelectedTab ?? tabList[0]?.id ?? ""
-  );
 
   useEffect(() => {
     setTabList(dataTabList ?? []);
   }, [dataTabList]);
+  const [tabList, setTabList] = useAtom(TAB_ATOM.tabList);
+  const [currentTabId, setCurrentTabId] = useAtom(TAB_ATOM.selectedTabId);
 
   const getIndexFromTabId = (id: string) => {
     return tabList.findIndex((item) => item.id === id) ?? -1;
