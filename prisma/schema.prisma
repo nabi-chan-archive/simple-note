@@ -48,6 +48,7 @@ model User {
     sessions      Session[]
     tab           Tab[]
     article       Article[]
+    printer       Printer?
 
     @@map("nextauth_users")
 }
@@ -91,4 +92,17 @@ model Article {
     tabId String @unique @map("tab_id")
 
     @@map("articles")
+}
+
+model Printer {
+    id String @id @default(cuid())
+
+    name String
+    ip   String
+    port String
+
+    owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+    ownerId String @unique @map("owner_id")
+
+    @@map("printers")
 }

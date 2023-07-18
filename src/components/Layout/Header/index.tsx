@@ -39,6 +39,9 @@ export default function Header() {
           >
             <li className="p-2">안녕하세요, {userName}님!</li>
             <li>
+              <Link href="/setting/printer">🖨️ | 프린터 설정하기</Link>
+            </li>
+            <li>
               <button onClick={handleSignOut}>👋 | 로그아웃하기</button>
             </li>
           </ul>
