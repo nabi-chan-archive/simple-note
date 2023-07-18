@@ -31,7 +31,7 @@ export default function Home({
   } = useTabList();
 
   return (
-    <div className="font-mono">
+    <>
       <Header token={token} />
       <main className="main mt-4 flex min-h-screen flex-col gap-2 px-[54px]">
         {isLoading ? (
@@ -53,7 +53,7 @@ export default function Home({
           </Suspense>
         )}
       </main>
-    </div>
+    </>
   );
 }
 
