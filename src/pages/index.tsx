@@ -30,7 +30,7 @@ export default function Home({
           removeTab={removeTab}
           setTab={setTab}
         />
-        <Editor currentTabId={currentTab?.id} />
+        <Editor currentTabId={currentTab.id} />
       </main>
     </div>
   );

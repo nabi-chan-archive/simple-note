@@ -2,7 +2,7 @@ import { useEditor } from "@/hooks/useEditor";
 import { BlockNoteView } from "@blocknote/react";
 
 type EditorProps = {
-  currentTabId?: string;
+  currentTabId: string;
 };
 
 export default function Editor({ currentTabId }: EditorProps) {

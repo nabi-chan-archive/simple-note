@@ -37,7 +37,7 @@ export function useTabList() {
   };
 
   const getTabFromId = (id: string) => {
-    return tabList.find((item) => item.id === id);
+    return tabList.find((item) => item.id === id) as Tab;
   };
 
   const currentTab = getTabFromId(currentTabId);

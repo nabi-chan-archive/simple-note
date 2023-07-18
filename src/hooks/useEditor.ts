@@ -5,13 +5,13 @@ import { customBlockSchema } from "@/components/blocknote/blockSchema";
 import { api } from "@/utils/api";
 
 type useEditorArgs = {
-  currentTabId?: string;
+  currentTabId: string;
 };
 
 export function useEditor({ currentTabId }: useEditorArgs, deps: unknown[]) {
   const { data: initialContent } = api.article.getArticle.useQuery(
     {
-      tabId: currentTabId!,
+      tabId: currentTabId,
     },
     {
       enabled: !!currentTabId,
@@ -24,7 +24,7 @@ export function useEditor({ currentTabId }: useEditorArgs, deps: unknown[]) {
       initialContent: initialContent ?? [],
       onEditorContentChange(editor) {
         updateArticle({
-          tabId: currentTabId!,
+          tabId: currentTabId,
           content: editor.topLevelBlocks,
         });
       },
