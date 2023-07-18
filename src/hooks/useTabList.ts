@@ -1,6 +1,6 @@
 import { type Tab } from "@/types/Tab";
 import { api } from "@/utils/api";
-import { useState, type ChangeEvent, type MouseEvent, useEffect } from "react";
+import { type ChangeEvent, type MouseEvent, useEffect } from "react";
 import cuid from "cuid";
 import { useAtom } from "jotai";
 import TAB_ATOM from "@/state/TAB_ATOM";
@@ -15,20 +15,15 @@ export function useTabList() {
     onSuccess: () => void trpc.tab.getTabList.invalidate(),
   };
 
-  const { mutateAsync: createTabAsync } = api.tab.createTab.useMutation(
+  const { mutate: createTabAsync, isLoading: isCreatingTab } =
+    api.tab.createTab.useMutation(invalidateTabListWhenApiSuccess);
+  const { mutate: removeTabAsync } = api.tab.removeTab.useMutation(
     invalidateTabListWhenApiSuccess
   );
-  const { mutateAsync: removeTabAsync } = api.tab.removeTab.useMutation(
-    invalidateTabListWhenApiSuccess
-  );
-  const { mutateAsync: renameTabAsync } = api.tab.renameTab.useMutation(
+  const { mutate: renameTabAsync } = api.tab.renameTab.useMutation(
     invalidateTabListWhenApiSuccess
   );
 
-
-  useEffect(() => {
-    setTabList(dataTabList ?? []);
-  }, [dataTabList]);
   const [tabList, setTabList] = useAtom(TAB_ATOM.tabList);
   const [currentTabId, setCurrentTabId] = useAtom(TAB_ATOM.selectedTabId);
 
@@ -48,33 +43,41 @@ export function useTabList() {
     setCurrentTabId(tab.id);
   };
 
-  const newTab = async () => {
+  const newTab = () => {
     const id = cuid();
-    await createTabAsync({ id, title: "무제" });
-    setTabList((prev) => {
-      const newArray = [...prev, { id, title: "무제" }];
-      setCurrentTab(newArray[newArray.length - 1]);
-      return newArray;
-    });
+    createTabAsync(
+      { id, title: "무제" },
+      {
+        onSuccess: () =>
+          setTabList((prev) => {
+            const newArray = [...prev, { id, title: "무제" }];
+            setCurrentTab(newArray[newArray.length - 1]);
+            return newArray;
+          }),
+      }
+    );
   };
 
-  const renameTab =
-    (id: string) => async (event: ChangeEvent<HTMLInputElement>) => {
-      await renameTabAsync({ id, title: event.target.value });
-    };
+  const renameTab = (id: string) => (event: ChangeEvent<HTMLInputElement>) => {
+    renameTabAsync({ id, title: event.target.value });
+  };
 
-  const removeTab =
-    (id: string) => async (e: MouseEvent<HTMLButtonElement>) => {
-      e.stopPropagation();
-      const index = getIndexFromTabId(id) ?? 0;
+  const removeTab = (id: string) => (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    const index = getIndexFromTabId(id) ?? 0;
 
-      await removeTabAsync({ id });
-      setTabList((prev) => {
-        const newArray = prev.filter((item) => item.id !== id);
-        setCurrentTab(index - 1 < 0 ? newArray[0] : newArray[index - 1]);
-        return newArray;
-      });
-    };
+    removeTabAsync(
+      { id },
+      {
+        onSuccess: () =>
+          setTabList((prev) => {
+            const newArray = prev.filter((item) => item.id !== id);
+            setCurrentTab(index - 1 < 0 ? newArray[0] : newArray[index - 1]);
+            return newArray;
+          }),
+      }
+    );
+  };
 
   const setTab = (id: string) => () => {
     setCurrentTab(getTabFromId(id));
@@ -84,11 +87,21 @@ export function useTabList() {
     return id === currentTabId;
   };
 
+  if (!currentTabId && lastSelectedTab) {
+    setCurrentTabId(lastSelectedTab);
+  }
+
+  if (!currentTabId && !lastSelectedTab && dataTabList) {
+    setCurrentTab(dataTabList[0]);
+  }
+
+  if (dataTabList && dataTabList.length === 0 && !isCreatingTab) {
+    void createTabAsync({ title: "무제" });
+  }
+
   useEffect(() => {
-    if (dataTabList?.length === 0) {
-      void createTabAsync({ title: "무제" });
-    }
-  }, [createTabAsync, dataTabList?.length]);
+    setTabList(dataTabList ?? []);
+  }, [dataTabList, setTabList]);
 
   return {
     isLoading,
