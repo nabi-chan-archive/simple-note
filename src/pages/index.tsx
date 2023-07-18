@@ -3,34 +3,55 @@ import {
   type InferGetServerSidePropsType,
 } from "next";
 import { getToken } from "next-auth/jwt";
-import TabListSkeleton from "@/components/TabList/Skeleton";
 import { useTabList } from "@/hooks/useTabList";
-import dynamic from "next/dynamic";
-import Editor from "@/components/blocknote/Editor";
 import Header from "@/components/Header";
+import TabListSkeleton from "@/components/TabList/Skeleton";
+import EditorSkeleton from "@/components/blocknote/Editor/Skeleton";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+
 const TabList = dynamic(() => import("@/components/TabList"), {
-  loading: TabListSkeleton,
-  ssr: false,
+  loading: () => <TabListSkeleton />,
+});
+const Editor = dynamic(() => import("@/components/blocknote/Editor"), {
+  loading: () => <EditorSkeleton />,
 });
 
 export default function Home({
   token,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { tabList, newTab, isCurrentTab, removeTab, setTab, currentTab } =
-    useTabList();
+  const {
+    isLoading,
+    tabList,
+    newTab,
+    isCurrentTab,
+    removeTab,
+    setTab,
+    currentTab,
+  } = useTabList();
 
   return (
     <div className="font-mono">
       <Header token={token} />
       <main className="main mt-4 flex min-h-screen flex-col gap-2 px-[54px]">
-        <TabList
-          tabList={tabList}
-          newTab={newTab}
-          isCurrentTab={isCurrentTab}
-          removeTab={removeTab}
-          setTab={setTab}
-        />
-        <Editor currentTabId={currentTab.id} />
+        {isLoading ? (
+          <TabListSkeleton />
+        ) : (
+          <TabList
+            tabList={tabList}
+            newTab={newTab}
+            isCurrentTab={isCurrentTab}
+            removeTab={removeTab}
+            setTab={setTab}
+          />
+        )}
+        {isLoading ? (
+          <EditorSkeleton />
+        ) : (
+          <Suspense fallback={<EditorSkeleton />}>
+            <Editor currentTabId={currentTab.id} />
+          </Suspense>
+        )}
       </main>
     </div>
   );
