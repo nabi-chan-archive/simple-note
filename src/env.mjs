@@ -16,6 +16,7 @@ export const env = createEnv({
     GITHUB_CLIENT_ID: z.string(),
     GITHUB_CLIENT_SECRET: z.string(),
     FEATURE_FLAG_SHARE: z.boolean().optional(),
+    CHANNEL_SECRET: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_BASE_URL: z.preprocess(
@@ -24,6 +25,7 @@ export const env = createEnv({
     ),
     NEXT_PUBLIC_FEATURE_FLAG_SHARE: z.boolean().optional(),
     NEXT_PUBLIC_NODE_ENV: z.enum(["development", "test", "production"]),
+    NEXT_PUBLIC_CHANNEL_PLUGIN_KEY: z.string().optional(),
   },
   runtimeEnv: {
     // feature flag
@@ -32,6 +34,8 @@ export const env = createEnv({
     // ENV
     NEXT_PUBLIC_BASE_URL:
       process.env.VERCEL_URL ?? process.env.NEXT_PUBLIC_BASE_URL,
+    NEXT_PUBLIC_CHANNEL_PLUGIN_KEY: process.env.NEXT_PUBLIC_CHANNEL_PLUGIN_KEY,
+    CHANNEL_SECRET: process.env.CHANNEL_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
     NEXT_PUBLIC_NODE_ENV: process.env.NODE_ENV,
     NODE_ENV: process.env.NODE_ENV,

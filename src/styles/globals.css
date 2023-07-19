@@ -28,3 +28,7 @@
   padding: 0;
   font-family: monospace;
 }
+
+.ch-desk-messenger.rightPosition {
+  right: 75px !important;
+}

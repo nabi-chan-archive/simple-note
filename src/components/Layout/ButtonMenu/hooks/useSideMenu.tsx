@@ -9,6 +9,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { FaPrint, FaShare } from "react-icons/fa";
+import { BiSupport } from "react-icons/bi";
+import ChannelTalkButton from "@/components/ChannelTalk/ChannelTalkButton";
 
 export function useSideMenu() {
   const { status } = useSession();
@@ -23,6 +25,13 @@ export function useSideMenu() {
 
   function getSideMenuButtonList() {
     const buttonList: Button[] = [];
+
+    buttonList.push({
+      title: "채널톡 열기",
+      icon: <BiSupport />,
+      customButton: ChannelTalkButton,
+      onClick: () => undefined,
+    });
 
     if (status === "authenticated" && asPath === "/")
       buttonList.push({

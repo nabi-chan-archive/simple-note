@@ -8,6 +8,11 @@ import Head from "next/head";
 import { JetBrains_Mono } from "next/font/google";
 import { DevTools } from "jotai-devtools";
 import { Provider, createStore } from "jotai";
+import dynamic from "next/dynamic";
+
+const ChannelTalk = dynamic(() => import("@/components/ChannelTalk"), {
+  ssr: false,
+});
 
 const jetbrainsMono = JetBrains_Mono({
   weight: "variable",
@@ -34,6 +39,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         </Head>
         <SessionProvider session={session}>
           <Component {...pageProps} />
+          <ChannelTalk />
         </SessionProvider>
         <DevTools />
       </Provider>
