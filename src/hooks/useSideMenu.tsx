@@ -8,9 +8,10 @@ import { FaPrint } from "react-icons/fa";
 export function useSideMenu() {
   const { data: printer } = api.printer.getPrinter.useQuery();
   const { mutate: print } = api.printer.printArticle.useMutation();
-  const selectedTabId = useAtomValue(TAB_ATOM.selectedTabId);
+
   const [isOpen, toggleOpen] = useCycle(false, true);
 
+  const selectedTabId = useAtomValue(TAB_ATOM.selectedTabId);
   function getSideMenuButtonList() {
     const buttonList: Button[] = [];
 
