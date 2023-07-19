@@ -30,7 +30,13 @@ export default function TabList({
   const [itemList, setItemList] = useState(tabList);
   const { mutate: reorderTab } = api.tab.reorderTab.useMutation();
 
-  if (itemList.length !== tabList.length) setItemList(tabList);
+  if (
+    !!itemList.filter(
+      (x) => !tabList.find((tab) => x.title === tab.title && x.id === tab.id)
+    ).length ||
+    itemList.length !== tabList.length
+  )
+    setItemList(tabList);
 
   const handleDrop = (droppedItem: DropResult) => {
     if (!droppedItem.destination) return;
