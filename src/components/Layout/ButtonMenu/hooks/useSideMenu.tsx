@@ -1,5 +1,4 @@
 import ShareModal from "@/components/share/ShareModal";
-import { featureFlag } from "@/constants/featureFlag";
 import SHARE_ATOM from "@/state/SHARE_ATOM";
 import TAB_ATOM from "@/state/TAB_ATOM";
 import { type Button } from "@/types/SideMenu";
@@ -21,13 +20,12 @@ export function useSideMenu() {
   function getSideMenuButtonList() {
     const buttonList: Button[] = [];
 
-    if (featureFlag.share)
-      buttonList.push({
-        title: "공유하기",
-        icon: <FaShare />,
-        onClick: () => openSharedModal({ id: selectedTabId }),
-        modal: <ShareModal />,
-      });
+    buttonList.push({
+      title: "공유하기",
+      icon: <FaShare />,
+      onClick: () => openSharedModal({ id: selectedTabId }),
+      modal: <ShareModal />,
+    });
 
     if (printer) {
       buttonList.push({
