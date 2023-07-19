@@ -12,9 +12,9 @@ export default function Editor({ currentTab }: EditorProps) {
   const trpc = api.useContext();
 
   const [beforeTab, setBeforeTab] = useState<Tab | null>(null);
-  const [title, setTitle] = useState(currentTab.title);
+  const [title, setTitle] = useState(currentTab?.title ?? "");
 
-  const { editor } = useEditor({ currentTabId: currentTab.id }, []);
+  const { editor } = useEditor({ currentTabId: currentTab?.id ?? "" }, []);
   const { mutateAsync: updateTitle } = api.tab.renameTab.useMutation();
 
   if (!beforeTab || beforeTab.id !== currentTab.id) {
