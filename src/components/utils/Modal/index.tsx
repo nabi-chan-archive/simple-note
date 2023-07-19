@@ -27,18 +27,18 @@ export default function Modal({
       className="modal modal-bottom sm:modal-middle"
       onClose={onClose}
     >
-      <form method="dialog" className="modal-box z-50">
+      <div className="modal-box z-50">
         {typeof title === "string" ? (
           <h3 className="text-lg font-bold">{title}</h3>
         ) : (
           title
         )}
         <div className="py-4">{body}</div>
-        <div className="modal-action">
+        <form method="dialog" className="modal-action">
           {actions}
           {!actions && <button className="btn btn-primary btn-sm">닫기</button>}
-        </div>
-      </form>
+        </form>
+      </div>
       <form method="dialog" className="modal-backdrop z-40 bg-black/40">
         <button>닫기</button>
       </form>

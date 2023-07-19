@@ -1,9 +1,11 @@
+import ShareModal from "@/components/share/ShareModal";
+import SHARE_ATOM from "@/state/SHARE_ATOM";
 import TAB_ATOM from "@/state/TAB_ATOM";
 import { type Button } from "@/types/SideMenu";
 import { api } from "@/utils/api";
 import { useCycle } from "framer-motion";
-import { useAtomValue } from "jotai";
-import { FaPrint } from "react-icons/fa";
+import { useAtomValue, useSetAtom } from "jotai";
+import { FaPrint, FaShare } from "react-icons/fa";
 
 export function useSideMenu() {
   const { data: printer } = api.printer.getPrinter.useQuery();
@@ -12,8 +14,16 @@ export function useSideMenu() {
   const [isOpen, toggleOpen] = useCycle(false, true);
 
   const selectedTabId = useAtomValue(TAB_ATOM.selectedTabId);
+  const openSharedModal = useSetAtom(SHARE_ATOM.openSharedModal);
+
   function getSideMenuButtonList() {
     const buttonList: Button[] = [];
+
+    buttonList.push({
+      title: "공유하기",
+      icon: <FaShare />,
+      onClick: () => openSharedModal({ id: selectedTabId }),
+    });
 
     if (printer) {
       buttonList.push({
@@ -30,6 +40,7 @@ export function useSideMenu() {
 
   const modal = (
     <>
+      <ShareModal />
     </>
   );
 

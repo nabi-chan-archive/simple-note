@@ -16,8 +16,15 @@ export const env = createEnv({
     GITHUB_CLIENT_ID: z.string(),
     GITHUB_CLIENT_SECRET: z.string(),
   },
-  client: {},
+  client: {
+    NEXT_PUBLIC_BASE_URL: z.preprocess(
+      (str) => process.env.VERCEL_URL ?? str,
+      process.env.VERCEL ? z.string().min(1) : z.string().url()
+    ),
+  },
   runtimeEnv: {
+    NEXT_PUBLIC_BASE_URL:
+      process.env.VERCEL_URL ?? process.env.NEXT_PUBLIC_BASE_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,

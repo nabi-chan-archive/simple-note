@@ -49,6 +49,7 @@ model User {
     tab           Tab[]
     article       Article[]
     printer       Printer?
+    share         Share[]
 
     @@map("nextauth_users")
 }
@@ -91,6 +92,8 @@ model Article {
     tab   Tab    @relation(fields: [tabId], references: [id], onDelete: Cascade)
     tabId String @unique @map("tab_id")
 
+    share Share?
+
     @@map("articles")
 }
 
@@ -105,4 +108,19 @@ model Printer {
     ownerId String @unique @map("owner_id")
 
     @@map("printers")
+}
+
+model Share {
+    id String @id @default(cuid())
+
+    isShareActive Boolean @default(true)
+
+    createdAt DateTime  @default(now())
+    expiredAt DateTime?
+
+    author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    authorId String @map("author_id")
+
+    article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+    articleId String  @unique @map("article_id")
 }
