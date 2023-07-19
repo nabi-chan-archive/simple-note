@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { featureFlag } from "@/constants/featureFlag";
 
@@ -58,6 +58,35 @@ export const shareRouter = createTRPCRouter({
         data: {
           isShareActive: input.isShareActive,
           expiredAt: input.expiredAt,
+        },
+      });
+    }),
+
+  read: publicProcedure
+    .input(z.object({ shareId: z.string().cuid() }))
+    .query(async ({ input, ctx }) => {
+      return ctx.prisma.share.findFirst({
+        where: {
+          id: input.shareId,
+        },
+        select: {
+          article: {
+            select: {
+              tab: {
+                select: {
+                  title: true,
+                },
+              },
+              content: true,
+              createdAt: true,
+            },
+          },
+          author: {
+            select: {
+              name: true,
+              image: true,
+            },
+          },
         },
       });
     }),

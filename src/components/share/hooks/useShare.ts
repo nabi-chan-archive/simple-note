@@ -42,7 +42,7 @@ export function useShare() {
   const formRef = useRef<HTMLFormElement>(null);
 
   const shareLink = sharedInfo
-    ? `${env.NEXT_PUBLIC_BASE_URL}/share/${sharedInfo.id}`
+    ? `${env.NEXT_PUBLIC_BASE_URL}/shared/${sharedInfo.id}`
     : "";
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) =>
