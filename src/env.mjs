@@ -26,6 +26,7 @@ export const env = createEnv({
     NEXT_PUBLIC_FEATURE_FLAG_SHARE: z.boolean().optional(),
     NEXT_PUBLIC_NODE_ENV: z.enum(["development", "test", "production"]),
     NEXT_PUBLIC_CHANNEL_PLUGIN_KEY: z.string().optional(),
+    NEXT_PUBLIC_GA_TRACKING_ID: z.string().optional(),
   },
   runtimeEnv: {
     // feature flag
@@ -35,6 +36,7 @@ export const env = createEnv({
     NEXT_PUBLIC_BASE_URL:
       process.env.VERCEL_URL ?? process.env.NEXT_PUBLIC_BASE_URL,
     NEXT_PUBLIC_CHANNEL_PLUGIN_KEY: process.env.NEXT_PUBLIC_CHANNEL_PLUGIN_KEY,
+    NEXT_PUBLIC_GA_TRACKING_ID: process.env.NEXT_PUBLIC_GA_TRACKING_ID,
     CHANNEL_SECRET: process.env.CHANNEL_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
     NEXT_PUBLIC_NODE_ENV: process.env.NODE_ENV,

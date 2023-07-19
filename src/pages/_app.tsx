@@ -9,6 +9,9 @@ import { JetBrains_Mono } from "next/font/google";
 import { DevTools } from "jotai-devtools";
 import { Provider, createStore } from "jotai";
 import dynamic from "next/dynamic";
+import Script from "next/script";
+import { env } from "@/env.mjs";
+import * as gTag from "@/hooks/useGtag";
 
 const ChannelTalk = dynamic(() => import("@/components/ChannelTalk"), {
   ssr: false,
@@ -26,6 +29,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  gTag.useGTag();
+
   return (
     <div className={jetbrainsMono.className}>
       <Provider store={customStore}>
@@ -43,6 +48,28 @@ const MyApp: AppType<{ session: Session | null }> = ({
         </SessionProvider>
         <DevTools />
       </Provider>
+      {env.NEXT_PUBLIC_GA_TRACKING_ID && (
+        <>
+          <Script
+            strategy="afterInteractive"
+            src={`https://www.googletagmanager.com/gtag/js?id=${env.NEXT_PUBLIC_GA_TRACKING_ID}`}
+          />
+          <Script
+            id="gtag-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${env.NEXT_PUBLIC_GA_TRACKING_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `,
+            }}
+          />
+        </>
+      )}
     </div>
   );
 };

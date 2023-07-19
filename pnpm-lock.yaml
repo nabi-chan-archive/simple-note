@@ -91,6 +91,9 @@ devDependencies:
   '@types/eslint':
     specifier: ^8.37.0
     version: 8.44.0
+  '@types/gtag.js':
+    specifier: ^0.0.12
+    version: 0.0.12
   '@types/josa':
     specifier: ^3
     version: 3.0.2
@@ -3121,6 +3124,10 @@ packages:
     dependencies:
       '@types/minimatch': 5.1.2
       '@types/node': 18.16.19
+    dev: true
+
+  /@types/gtag.js@0.0.12:
+    resolution: {integrity: sha512-YQV9bUsemkzG81Ea295/nF/5GijnD2Af7QhEofh7xu+kvCN6RdodgNwwGWXB5GMI3NoyvQo0odNctoH/qLMIpg==}
     dev: true
 
   /@types/hast@2.3.5:
