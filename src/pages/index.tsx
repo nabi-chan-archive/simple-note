@@ -1,4 +1,4 @@
-import { useTabList } from "@/hooks/useTabList";
+import { useTabList } from "@/components/TabList/hooks/useTabList";
 import TabListSkeleton from "@/components/TabList/Skeleton";
 import EditorSkeleton from "@/components/blocknote/Editor/Skeleton";
 import dynamic from "next/dynamic";

@@ -1,4 +1,4 @@
-import { useSideMenu } from "@/hooks/useSideMenu";
+import { useSideMenu } from "@/components/Layout/ButtonMenu/hooks/useSideMenu";
 import { motion } from "framer-motion";
 import { FaHamburger } from "react-icons/fa";
 

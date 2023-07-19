@@ -1,4 +1,4 @@
-import { useEditor } from "@/hooks/useEditor";
+import { useEditor } from "@/components/blocknote/hooks/useEditor";
 import { api } from "@/utils/api";
 import { BlockNoteView } from "@blocknote/react";
 import { type Tab } from "@/types/Tab";
