@@ -26,11 +26,11 @@ export default function Header() {
                   alt="프로필사진"
                   className="bg-primary"
                 />
-              ) : (
-                <span className="h-full w-full bg-primary text-2xl text-white">
+              ) : session.status === "authenticated" ? (
+                <div className="flex h-full w-full items-center justify-center bg-primary text-2xl text-white">
                   {userName?.slice(0, 1)}
-                </span>
-              )}
+                </div>
+              ) : null}
             </div>
           </label>
           <ul

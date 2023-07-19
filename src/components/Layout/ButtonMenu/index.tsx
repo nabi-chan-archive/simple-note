@@ -1,9 +1,13 @@
 import { useSideMenu } from "@/components/Layout/ButtonMenu/hooks/useSideMenu";
 import { motion } from "framer-motion";
+import { useSession } from "next-auth/react";
 import { FaHamburger } from "react-icons/fa";
 
 export default function ButtonMenu() {
+  const { status } = useSession();
   const { isOpen, toggleOpen, buttonList, modal } = useSideMenu();
+
+  if (status !== "authenticated") return null;
 
   return (
     <>
