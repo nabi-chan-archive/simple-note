@@ -7,6 +7,7 @@ type ModalProps = {
 
   title: ReactNode;
   body: ReactNode;
+  actions?: ReactNode;
 
   onClose: () => void;
 };
@@ -16,6 +17,7 @@ export default function Modal({
   id,
   title,
   body,
+  actions,
   onClose,
 }: ModalProps) {
   return (
@@ -33,7 +35,8 @@ export default function Modal({
         )}
         <div className="py-4">{body}</div>
         <div className="modal-action">
-          <button className="btn btn-primary btn-sm">닫기</button>
+          {actions}
+          {!actions && <button className="btn btn-primary btn-sm">닫기</button>}
         </div>
       </form>
       <form method="dialog" className="modal-backdrop z-40 bg-black/40">
