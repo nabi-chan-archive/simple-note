@@ -4,4 +4,5 @@ export type Button = {
   title: string;
   icon: ReactNode;
   onClick: () => void;
+  modal?: ReactNode;
 };

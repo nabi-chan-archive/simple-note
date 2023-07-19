@@ -1,11 +1,14 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
+import { featureFlag } from "@/constants/featureFlag";
 
 export const shareRouter = createTRPCRouter({
   info: protectedProcedure
     .input(z.object({ tabId: z.string().cuid() }))
     .query(async ({ input, ctx }) => {
+      if (!featureFlag.share) throw new TRPCError({ code: "NOT_FOUND" });
+
       const article = await ctx.prisma.article.findFirst({
         where: {
           tab: {
@@ -43,6 +46,8 @@ export const shareRouter = createTRPCRouter({
       })
     )
     .mutation(({ input, ctx }) => {
+      if (!featureFlag.share) throw new TRPCError({ code: "NOT_FOUND" });
+
       return ctx.prisma.share.update({
         where: {
           id: input.shareId,

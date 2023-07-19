@@ -1,10 +1,12 @@
 import ShareModal from "@/components/share/ShareModal";
+import { featureFlag } from "@/constants/featureFlag";
 import SHARE_ATOM from "@/state/SHARE_ATOM";
 import TAB_ATOM from "@/state/TAB_ATOM";
 import { type Button } from "@/types/SideMenu";
 import { api } from "@/utils/api";
 import { useCycle } from "framer-motion";
 import { useAtomValue, useSetAtom } from "jotai";
+import { Fragment } from "react";
 import { FaPrint, FaShare } from "react-icons/fa";
 
 export function useSideMenu() {
@@ -19,11 +21,13 @@ export function useSideMenu() {
   function getSideMenuButtonList() {
     const buttonList: Button[] = [];
 
-    buttonList.push({
-      title: "공유하기",
-      icon: <FaShare />,
-      onClick: () => openSharedModal({ id: selectedTabId }),
-    });
+    if (featureFlag.share)
+      buttonList.push({
+        title: "공유하기",
+        icon: <FaShare />,
+        onClick: () => openSharedModal({ id: selectedTabId }),
+        modal: <ShareModal />,
+      });
 
     if (printer) {
       buttonList.push({
@@ -40,7 +44,9 @@ export function useSideMenu() {
 
   const modal = (
     <>
-      <ShareModal />
+      {getSideMenuButtonList().map((button) => (
+        <Fragment key={button.title}>{button.modal}</Fragment>
+      ))}
     </>
   );
 

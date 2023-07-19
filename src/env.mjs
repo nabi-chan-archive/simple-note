@@ -15,17 +15,25 @@ export const env = createEnv({
     ),
     GITHUB_CLIENT_ID: z.string(),
     GITHUB_CLIENT_SECRET: z.string(),
+    FEATURE_FLAG_SHARE: z.boolean().optional(),
   },
   client: {
     NEXT_PUBLIC_BASE_URL: z.preprocess(
       (str) => process.env.VERCEL_URL ?? str,
       process.env.VERCEL ? z.string().min(1) : z.string().url()
     ),
+    NEXT_PUBLIC_FEATURE_FLAG_SHARE: z.boolean().optional(),
+    NEXT_PUBLIC_NODE_ENV: z.enum(["development", "test", "production"]),
   },
   runtimeEnv: {
+    // feature flag
+    NEXT_PUBLIC_FEATURE_FLAG_SHARE: process.env.FEATURE_FLAG_SHARE,
+    FEATURE_FLAG_SHARE: process.env.FEATURE_FLAG_SHARE,
+    // ENV
     NEXT_PUBLIC_BASE_URL:
       process.env.VERCEL_URL ?? process.env.NEXT_PUBLIC_BASE_URL,
     DATABASE_URL: process.env.DATABASE_URL,
+    NEXT_PUBLIC_NODE_ENV: process.env.NODE_ENV,
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
