@@ -8,7 +8,7 @@ export default function Header() {
   const handleSignOut = () => void signOut({ callbackUrl: "/" });
 
   return (
-    <header className="navbar bg-base-100 px-[54px] shadow-md">
+    <header className="navbar bg-base-100 px-4 shadow-md sm:px-[54px]">
       <div className="flex-1">
         <Link href="/#" className="btn btn-ghost btn-sm text-xl normal-case">
           Simple Note
