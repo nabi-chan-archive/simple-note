@@ -28,7 +28,7 @@ export default function ButtonMenu() {
             },
           }}
         >
-          {buttonList.map(({ icon, ...button }) => (
+          {buttonList.map(({ icon, customButton, ...button }) => (
             <motion.li
               key={button.title}
               variants={{
@@ -42,12 +42,20 @@ export default function ButtonMenu() {
                 },
               }}
             >
-              <motion.button
-                {...button}
-                className="btn btn-square btn-secondary btn-sm"
-              >
-                {icon}
-              </motion.button>
+              {customButton ? (
+                customButton({
+                  ...button,
+                  children: icon,
+                  btnClassName: "btn btn-square btn-secondary btn-sm",
+                })
+              ) : (
+                <motion.button
+                  {...button}
+                  className="btn btn-square btn-secondary btn-sm"
+                >
+                  {icon}
+                </motion.button>
+              )}
             </motion.li>
           ))}
         </motion.ul>
