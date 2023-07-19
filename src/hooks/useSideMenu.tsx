@@ -27,10 +27,16 @@ export function useSideMenu() {
     return buttonList;
   }
 
+  const modal = (
+    <>
+    </>
+  );
+
   return {
     isOpen,
     toggleOpen,
 
+    modal,
     buttonList: getSideMenuButtonList(),
   };
 }
