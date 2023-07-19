@@ -46,7 +46,7 @@ export function useTabList() {
   const newTab = () => {
     const id = cuid();
     createTabAsync(
-      { id, title: "무제" },
+      { id, title: "무제", order: tabList.length },
       {
         onSuccess: () =>
           setTabList((prev) => {

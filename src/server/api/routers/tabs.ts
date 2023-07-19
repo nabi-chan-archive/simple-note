@@ -14,7 +14,7 @@ export const tabRouter = createTRPCRouter({
         title: true,
       },
       orderBy: {
-        createdAt: "asc",
+        order: "asc",
       },
     });
   }),
@@ -24,6 +24,7 @@ export const tabRouter = createTRPCRouter({
       z.object({
         id: z.string().cuid().nullish(),
         title: z.string().min(1).max(100),
+        order: z.number().default(0),
       })
     )
     .mutation(({ input, ctx }) => {
@@ -31,7 +32,7 @@ export const tabRouter = createTRPCRouter({
         data: {
           id: input.id ?? undefined,
           title: input.title,
-          order: 0,
+          order: input.order,
           owner: {
             connect: {
               id: ctx.token?.sub,
@@ -95,5 +96,39 @@ export const tabRouter = createTRPCRouter({
           title: true,
         },
       });
+    }),
+
+  reorderTab: protectedProcedure
+    .input(
+      z.object({
+        tabList: z
+          .object({
+            id: z.string().cuid(),
+            order: z.number(),
+          })
+          .array(),
+      })
+    )
+    .mutation(({ input, ctx }) => {
+      return ctx.prisma.$transaction(
+        input.tabList.map((tab) =>
+          ctx.prisma.tab.update({
+            where: {
+              id: tab.id,
+              owner: {
+                id: ctx.token?.sub,
+              },
+            },
+            data: {
+              order: tab.order,
+            },
+            select: {
+              id: true,
+              title: true,
+              order: true,
+            },
+          })
+        )
+      );
     }),
 });
