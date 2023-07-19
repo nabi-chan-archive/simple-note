@@ -52,7 +52,7 @@ function renderBlock(
 
   // render bulletListItem
   if (block.type === "bulletListItem") {
-    printer.print("* ");
+    printer.print("• ");
   }
 
   // render numberedListItem
