@@ -29,7 +29,7 @@ export default function Editor({ currentTab }: EditorProps) {
   };
 
   return (
-    <div className="-mx-4 flex flex-col gap-2">
+    <div className="-mx-4 flex flex-col gap-2 pb-24">
       <input
         type="text"
         className="input input-ghost w-full text-2xl font-bold"
