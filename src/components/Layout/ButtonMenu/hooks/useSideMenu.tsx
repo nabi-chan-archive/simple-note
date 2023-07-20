@@ -15,7 +15,9 @@ import ChannelTalkButton from "@/components/ChannelTalk/ChannelTalkButton";
 export function useSideMenu() {
   const { status } = useSession();
   const { asPath } = useRouter();
-  const { data: printer } = api.printer.getPrinter.useQuery();
+  const { data: printer } = api.printer.getPrinter.useQuery(undefined, {
+    enabled: status === "authenticated",
+  });
   const { mutate: print } = api.printer.printArticle.useMutation();
 
   const [isOpen, toggleOpen] = useCycle(false, true);

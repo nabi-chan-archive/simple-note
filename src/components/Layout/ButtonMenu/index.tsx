@@ -2,15 +2,11 @@ import { useSideMenu } from "@/components/Layout/ButtonMenu/hooks/useSideMenu";
 import CHANNEL_ATOM from "@/state/CHANNEL_ATOM";
 import { motion } from "framer-motion";
 import { useAtomValue } from "jotai";
-import { useSession } from "next-auth/react";
 import { FaHamburger } from "react-icons/fa";
 
 export default function ButtonMenu() {
-  const { status } = useSession();
   const { isOpen, toggleOpen, buttonList, modal } = useSideMenu();
   const unReadCount = useAtomValue(CHANNEL_ATOM.unReadMessageCount);
-
-  if (status !== "authenticated") return null;
 
   return (
     <>
