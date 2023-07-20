@@ -51,7 +51,7 @@ export default function ShareArticlePage() {
       <Head>
         <title>{data?.article.tab.title} - nabi-simple-note</title>
       </Head>
-      <main className="mx-0 px-4 pb-4 sm:-mx-[54px]">
+      <main className="px-4 pb-4 sm:mx-0">
         <header className="mb-4 flex flex-col gap-4 sm:flex-row">
           <div className="avatar rounded-full">
             <div className="w-12 rounded-full">
