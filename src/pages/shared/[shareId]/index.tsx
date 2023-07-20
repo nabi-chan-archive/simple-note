@@ -3,30 +3,29 @@ import EditorSkeleton from "@/components/blocknote/Editor/Skeleton";
 import { api } from "@/utils/api";
 import { type BlockSchema, type PartialBlock } from "@blocknote/core";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
 import Image from "next/image";
 import dayjs from "dayjs";
 import Head from "next/head";
 import Link from "next/link";
 import NotFound from "@/pages/404";
+import {
+  type GetServerSidePropsContext,
+  type InferGetServerSidePropsType,
+} from "next";
+import { prisma } from "@/server/db";
 
 const Viewer = dynamic(() => import("@/components/blocknote/Viewer"), {
   ssr: false,
   loading: () => <EditorSkeleton />,
 });
 
-export default function ShareArticlePage() {
-  const {
-    query: { shareId },
-  } = useRouter();
-  const { isLoading, data } = api.share.read.useQuery(
-    {
-      shareId: shareId as string,
-    },
-    {
-      enabled: !!shareId,
-    }
-  );
+export default function ShareArticlePage({
+  title,
+  shareId,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { isLoading, data } = api.share.read.useQuery({
+    shareId,
+  });
 
   const initialContent = data?.article.content as PartialBlock<BlockSchema>[];
 
@@ -49,7 +48,7 @@ export default function ShareArticlePage() {
   return (
     <Layout>
       <Head>
-        <title>{data?.article.tab.title} - nabi-simple-note</title>
+        <title>{title} - nabi-simple-note</title>
       </Head>
       <main className="px-4 pb-4 sm:mx-0">
         <header className="mb-4 flex flex-col gap-4 sm:flex-row">
@@ -90,4 +89,39 @@ export default function ShareArticlePage() {
       </main>
     </Layout>
   );
+}
+
+export async function getServerSideProps({
+  params,
+}: GetServerSidePropsContext) {
+  const data = await prisma.share.findFirst({
+    where: {
+      id: params?.shareId as string,
+    },
+    select: {
+      id: true,
+      article: {
+        select: {
+          tab: {
+            select: {
+              title: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      shareId: data.id,
+      title: data.article.tab.title,
+    },
+  };
 }
