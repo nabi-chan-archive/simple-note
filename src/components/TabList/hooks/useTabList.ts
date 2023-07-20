@@ -4,6 +4,7 @@ import { type ChangeEvent, type MouseEvent, useEffect } from "react";
 import cuid from "cuid";
 import { useAtom } from "jotai";
 import TAB_ATOM from "@/state/TAB_ATOM";
+import { toast } from "react-toastify";
 
 export function useTabList() {
   const lastSelectedTab = globalThis.localStorage?.getItem("lastSelectedTab");
@@ -48,12 +49,15 @@ export function useTabList() {
     createTabAsync(
       { id, title: "무제", order: tabList.length },
       {
-        onSuccess: () =>
+        onSuccess: () => {
           setTabList((prev) => {
             const newArray = [...prev, { id, title: "무제" }];
             setCurrentTab(newArray[newArray.length - 1]);
             return newArray;
-          }),
+          });
+
+          toast.success("새 탭이 생성되었어요.");
+        },
       }
     );
   };
@@ -69,12 +73,15 @@ export function useTabList() {
     removeTabAsync(
       { id },
       {
-        onSuccess: () =>
+        onSuccess: () => {
           setTabList((prev) => {
             const newArray = prev.filter((item) => item.id !== id);
             setCurrentTab(index - 1 < 0 ? newArray[0] : newArray[index - 1]);
             return newArray;
-          }),
+          });
+
+          toast.success("탭이 삭제되었어요.");
+        },
       }
     );
   };

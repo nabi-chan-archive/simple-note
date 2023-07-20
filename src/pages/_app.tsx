@@ -4,6 +4,7 @@ import { type AppType } from "next/app";
 import { api } from "@/utils/api";
 import "@/styles/globals.css";
 import "@blocknote/core/style.css";
+import "react-toastify/dist/ReactToastify.css";
 import Head from "next/head";
 import { JetBrains_Mono } from "next/font/google";
 import { DevTools } from "jotai-devtools";
@@ -12,6 +13,7 @@ import dynamic from "next/dynamic";
 import Script from "next/script";
 import { env } from "@/env.mjs";
 import * as gTag from "@/hooks/useGtag";
+import { ToastContainer } from "react-toastify";
 
 const ChannelTalk = dynamic(() => import("@/components/ChannelTalk"), {
   ssr: false,
@@ -48,6 +50,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
         </SessionProvider>
         <DevTools />
       </Provider>
+      <ToastContainer
+        position="top-right"
+        pauseOnFocusLoss={false}
+        pauseOnHover={false}
+        theme="colored"
+      />
       {env.NEXT_PUBLIC_GA_TRACKING_ID && (
         <>
           <Script

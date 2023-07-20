@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { type FormEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { z } from "zod";
 
 export function useShare() {
@@ -21,6 +22,7 @@ export function useShare() {
   );
   const { mutate: updateSharedInfo, isLoading } =
     api.share.update.useMutation();
+  const { mutate: createSharedInfo } = api.share.create.useMutation();
 
   const {
     register,
@@ -58,6 +60,7 @@ export function useShare() {
         {
           onSuccess: () => {
             void trpc.share.info.invalidate({ tabId });
+            toast.success("공유 설정이 변경되었어요.");
             setSelectedTabId("");
           },
         }
