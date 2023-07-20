@@ -17,7 +17,7 @@ export default function Editor({ currentTab }: EditorProps) {
   const { editor } = useEditor({ currentTabId: currentTab?.id ?? "" }, []);
   const { mutateAsync: updateTitle } = api.tab.renameTab.useMutation();
 
-  if (!beforeTab || beforeTab.id !== currentTab?.id) {
+  if (currentTab && (!beforeTab || beforeTab.id !== currentTab.id)) {
     setTitle(currentTab.title);
     setBeforeTab(currentTab);
   }
