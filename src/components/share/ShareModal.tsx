@@ -16,6 +16,8 @@ export default function ShareModal() {
     disabled,
     submitForm,
 
+    handleShareLinkCreate,
+
     handleShareLinkCopy,
     handleShareModalClose,
   } = useShare();
@@ -37,7 +39,11 @@ export default function ShareModal() {
         }
         actions={
           <>
-            <button type="button" className="btn btn-primary btn-sm">
+            <button
+              type="button"
+              className="btn btn-primary btn-sm"
+              onClick={handleShareLinkCreate}
+            >
               네!
             </button>
             <button type="submit" className="btn btn-secondary btn-sm">

@@ -87,4 +87,23 @@ export const shareRouter = createTRPCRouter({
         },
       });
     }),
+
+  create: protectedProcedure
+    .input(z.object({ tabId: z.string().cuid() }))
+    .mutation(async ({ input, ctx }) => {
+      return ctx.prisma.share.create({
+        data: {
+          article: {
+            connect: {
+              tabId: input.tabId,
+            },
+          },
+          author: {
+            connect: {
+              id: ctx.token.sub,
+            },
+          },
+        },
+      });
+    }),
 });

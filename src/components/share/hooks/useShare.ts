@@ -79,6 +79,19 @@ export function useShare() {
     void globalThis.navigator.clipboard.writeText(shareLink);
   };
 
+  const handleShareLinkCreate = () => {
+    createSharedInfo(
+      { tabId },
+      {
+        onSuccess: () => {
+          void trpc.share.info.invalidate({ tabId });
+          toast.success("공유 링크가 생성되었어요.");
+          setIsFormReset(false);
+        },
+      }
+    );
+  };
+
   if (!!sharedInfo && !isFormReset) {
     console.log(sharedInfo);
     reset({
@@ -100,6 +113,8 @@ export function useShare() {
     handleSubmit,
     disabled: !formState.isDirty || isLoading,
     submitForm,
+
+    handleShareLinkCreate,
 
     handleShareLinkCopy,
     handleShareModalClose,
