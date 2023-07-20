@@ -30,9 +30,10 @@ export default function ShareArticlePage() {
 
   const initialContent = data?.article.content as PartialBlock<BlockSchema>[];
 
-  if (!data || !data.isShareActive) return <NotFound />;
+  if ((!isLoading && !data) || data?.isShareActive === false)
+    return <NotFound />;
 
-  if (dayjs(data.expiredAt).isBefore(dayjs()))
+  if (!isLoading && dayjs(data?.expiredAt).isBefore(dayjs()))
     return (
       <Layout>
         <main className="flex flex-col items-center gap-3 py-48">
