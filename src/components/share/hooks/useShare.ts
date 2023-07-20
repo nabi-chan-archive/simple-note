@@ -2,7 +2,7 @@ import { env } from "@/env.mjs";
 import SHARE_ATOM from "@/state/SHARE_ATOM";
 import { api } from "@/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { type FormEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -11,6 +11,7 @@ export function useShare() {
   const trpc = api.useContext();
 
   const [tabId, setTabId] = useAtom(SHARE_ATOM.currentSharedId);
+  const setSelectedTabId = useSetAtom(SHARE_ATOM.currentSharedId);
   const isModalOpen = useAtomValue(SHARE_ATOM.isSharedModalOpen);
 
   const [isFormReset, setIsFormReset] = useState(false);
@@ -57,6 +58,7 @@ export function useShare() {
         {
           onSuccess: () => {
             void trpc.share.info.invalidate({ tabId });
+            setSelectedTabId("");
           },
         }
       );
