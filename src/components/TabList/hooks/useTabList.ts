@@ -1,6 +1,11 @@
 import { type Tab } from "@/types/Tab";
 import { api } from "@/utils/api";
-import { type ChangeEvent, type MouseEvent, useEffect } from "react";
+import {
+  type ChangeEvent,
+  type MouseEvent,
+  useEffect,
+  useCallback,
+} from "react";
 import cuid from "cuid";
 import { useAtom } from "jotai";
 import TAB_ATOM from "@/state/TAB_ATOM";
@@ -44,7 +49,7 @@ export function useTabList() {
     setCurrentTabId(tab.id);
   };
 
-  const newTab = () => {
+  const newTab = (noAlert?: boolean) => {
     const id = cuid();
     createTabAsync(
       { id, title: "무제", order: tabList.length },
@@ -56,7 +61,7 @@ export function useTabList() {
             return newArray;
           });
 
-          toast.success("새 탭이 생성되었어요.");
+          !noAlert && toast.success("새 탭이 생성되었어요.");
         },
       }
     );
@@ -90,20 +95,27 @@ export function useTabList() {
     setCurrentTab(getTabFromId(id));
   };
 
-  const isCurrentTab = (id: string) => {
-    return id === currentTabId;
-  };
+  const isCurrentTab = useCallback(
+    (id: string) => {
+      return id === currentTabId;
+    },
+    [currentTabId]
+  );
 
-  if (!currentTabId && lastSelectedTab) {
-    setCurrentTabId(lastSelectedTab);
+  if (!currentTabId && lastSelectedTab && dataTabList?.length) {
+    if (!dataTabList.find(({ id }) => id === lastSelectedTab)) {
+      setCurrentTab(dataTabList[0]);
+    } else {
+      setCurrentTabId(lastSelectedTab);
+    }
   }
 
-  if (!currentTabId && !lastSelectedTab && dataTabList) {
+  if (!currentTabId && !lastSelectedTab && dataTabList?.length) {
     setCurrentTab(dataTabList[0]);
   }
 
   if (dataTabList && dataTabList.length === 0 && !isCreatingTab) {
-    void createTabAsync({ title: "무제" });
+    newTab(true);
   }
 
   useEffect(() => {

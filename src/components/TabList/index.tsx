@@ -73,9 +73,7 @@ export default function TabList({
                       onClick={setTab(id)}
                       className={[
                         "item-container tab tab-bordered min-w-[200px] flex-1 flex-nowrap justify-between gap-2",
-                        tabList.length === 1 || isCurrentTab(id)
-                          ? "tab-active"
-                          : "",
+                        isCurrentTab(id) ? "tab-active" : "",
                       ].join(" ")}
                       ref={provided.innerRef}
                       {...provided.dragHandleProps}
