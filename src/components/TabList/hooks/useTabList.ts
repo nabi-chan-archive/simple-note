@@ -5,24 +5,28 @@ import {
   type MouseEvent,
   useEffect,
   useCallback,
+  useState,
 } from "react";
 import cuid from "cuid";
 import { useAtom } from "jotai";
 import TAB_ATOM from "@/state/TAB_ATOM";
 import { toast } from "react-toastify";
+import { throttle } from "throttle-debounce";
 
 export function useTabList() {
   const lastSelectedTab = globalThis.localStorage?.getItem("lastSelectedTab");
 
   const trpc = api.useContext();
 
+  const [isFirstTabCreated, setIsFirstTabCreated] = useState(false);
   const { isLoading, data: dataTabList } = api.tab.getTabList.useQuery();
   const invalidateTabListWhenApiSuccess = {
     onSuccess: () => void trpc.tab.getTabList.invalidate(),
   };
 
-  const { mutate: createTabAsync, isLoading: isCreatingTab } =
-    api.tab.createTab.useMutation(invalidateTabListWhenApiSuccess);
+  const { mutate: createTabAsync } = api.tab.createTab.useMutation(
+    invalidateTabListWhenApiSuccess
+  );
   const { mutate: removeTabAsync } = api.tab.removeTab.useMutation(
     invalidateTabListWhenApiSuccess
   );
@@ -43,13 +47,16 @@ export function useTabList() {
 
   const currentTab = getTabFromId(currentTabId) ?? (tabList[0] as Tab);
 
-  const setCurrentTab = (tab?: Tab) => {
-    if (!tab) throw new Error("No Tab!");
-    globalThis?.localStorage.setItem("lastSelectedTab", tab.id);
-    setCurrentTabId(tab.id);
-  };
+  const setCurrentTab = useCallback(
+    (tab?: Tab) => {
+      if (!tab) throw new Error("No Tab!");
+      globalThis?.localStorage.setItem("lastSelectedTab", tab.id);
+      setCurrentTabId(tab.id);
+    },
+    [setCurrentTabId]
+  );
 
-  const newTab = (noAlert?: boolean) => {
+  const newTab = useCallback(() => {
     const id = cuid();
     createTabAsync(
       { id, title: "무제", order: tabList.length },
@@ -61,11 +68,18 @@ export function useTabList() {
             return newArray;
           });
 
-          !noAlert && toast.success("새 탭이 생성되었어요.");
+          toast.success("새 탭이 생성되었어요.");
         },
       }
     );
-  };
+  }, [createTabAsync, setCurrentTab, setTabList, tabList.length]);
+
+  useEffect(() => {
+    if (dataTabList && !dataTabList?.length && !isFirstTabCreated) {
+      setIsFirstTabCreated(true);
+      newTab();
+    }
+  }, [dataTabList, isFirstTabCreated, newTab]);
 
   const renameTab = (id: string) => (event: ChangeEvent<HTMLInputElement>) => {
     renameTabAsync({ id, title: event.target.value });
@@ -112,10 +126,6 @@ export function useTabList() {
 
   if (!currentTabId && !lastSelectedTab && dataTabList?.length) {
     setCurrentTab(dataTabList[0]);
-  }
-
-  if (dataTabList && dataTabList.length === 0 && !isCreatingTab) {
-    newTab(true);
   }
 
   useEffect(() => {
