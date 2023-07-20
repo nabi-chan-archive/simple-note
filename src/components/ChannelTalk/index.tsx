@@ -9,7 +9,9 @@ import { useEffect } from "react";
 export default function ChannelTalk() {
   const { data, status } = useSession();
   const updateUnRead = useSetAtom(CHANNEL_ATOM.unReadMessageCount);
-  const { data: memberHash } = api.auth.getChannelHash.useQuery();
+  const { data: memberHash } = api.auth.getChannelHash.useQuery(undefined, {
+    enabled: status === "authenticated",
+  });
 
   useEffect(() => {
     if (!env.NEXT_PUBLIC_CHANNEL_PLUGIN_KEY) return;
