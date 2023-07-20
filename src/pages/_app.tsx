@@ -14,6 +14,7 @@ import Script from "next/script";
 import { env } from "@/env.mjs";
 import * as gTag from "@/hooks/useGtag";
 import { ToastContainer } from "react-toastify";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const ChannelTalk = dynamic(() => import("@/components/ChannelTalk"), {
   ssr: false,
@@ -45,7 +46,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
           />
         </Head>
         <SessionProvider session={session}>
-          <Component {...pageProps} />
+          <ErrorBoundary>
+            <Component {...pageProps} />
+          </ErrorBoundary>
           <ChannelTalk />
         </SessionProvider>
         <DevTools />

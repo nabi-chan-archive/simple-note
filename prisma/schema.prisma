@@ -124,3 +124,16 @@ model Share {
     article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
     articleId String  @unique @map("article_id")
 }
+
+model Log {
+    id String @id @default(cuid())
+
+    createdAt DateTime @default(now())
+
+    message String
+    level   String
+    meta    Json
+    ip      String
+
+    @@map("logs")
+}

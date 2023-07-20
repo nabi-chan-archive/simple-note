@@ -5,6 +5,7 @@ import { tabRouter } from "./routers/tabs";
 import { articleRouter } from "./routers/article";
 import { printerRouter } from "./routers/printer";
 import { shareRouter } from "./routers/share";
+import { logRouter } from "./routers/logs";
 
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
@@ -13,6 +14,7 @@ export const appRouter = createTRPCRouter({
   article: articleRouter,
   printer: printerRouter,
   share: shareRouter,
+  log: logRouter,
 });
 
 export type AppRouter = typeof appRouter;

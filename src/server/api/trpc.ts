@@ -7,10 +7,12 @@ import { getToken, type JWT } from "next-auth/jwt";
 
 type CreateContextOptions = {
   token: JWT | null;
+  ip: string;
 };
 
 const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
+    ip: opts.ip,
     token: opts.token,
     prisma,
   };
@@ -22,6 +24,10 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   const token = await getToken({ req });
 
   return createInnerTRPCContext({
+    ip:
+      (req.headers["x-real-ip"] as string | undefined) ||
+      req.socket.remoteAddress ||
+      "undefined",
     token,
   });
 };
