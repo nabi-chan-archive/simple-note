@@ -132,7 +132,7 @@ model Log {
 
     message String
     level   String
-    meta    Json
+    meta    String
     ip      String
 
     @@map("logs")
