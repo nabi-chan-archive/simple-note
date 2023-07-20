@@ -65,6 +65,8 @@ export const shareRouter = createTRPCRouter({
           id: input.shareId,
         },
         select: {
+          isShareActive: true,
+          expiredAt: true,
           article: {
             select: {
               tab: {
