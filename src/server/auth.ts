@@ -8,12 +8,17 @@ import {
 import GithubProvider from "next-auth/providers/github";
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
+import { type User as PrismaUser } from "@prisma/client"
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
     } & DefaultSession["user"];
+  }
+
+  interface User extends PrismaUser {
+    level: "User" | "Admin";
   }
 }
 
@@ -22,6 +27,12 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
+    jwt({ token, user }) {
+      if (user?.level && user?.level !== "User") {
+        token.level = user?.level;
+      }
+      return token
+    },
     session({ session, token }) {
       if (session.user && token.sub) {
         session.user.id = token.sub;

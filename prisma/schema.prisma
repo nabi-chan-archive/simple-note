@@ -1,5 +1,5 @@
 generator client {
-    provider = "prisma-client-js"
+    provider     = "prisma-client-js"
 }
 
 datasource db {
@@ -38,6 +38,11 @@ model Session {
     @@map("nextauth_sessions")
 }
 
+enum Level {
+    Admin
+    User
+}
+
 model User {
     id            String    @id @default(cuid())
     name          String?
@@ -50,6 +55,7 @@ model User {
     article       Article[]
     printer       Printer?
     share         Share[]
+    level         Level     @default(User)
 
     @@map("nextauth_users")
 }

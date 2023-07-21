@@ -9,6 +9,23 @@ export default async function middleware(req: NextRequest) {
     return;
   }
 
+  if (req.nextUrl.pathname.startsWith("/admin")) {
+    return withAuth(req as NextRequestWithAuth, {
+      callbacks: {
+        authorized: ({ token }) => {
+          if (token?.level !== "Admin") {
+            return false;
+          }
+
+          return true;
+        }
+      },
+      pages: {
+        signIn: "/",
+      },
+    })
+  }
+
   return withAuth(req as NextRequestWithAuth, {
     pages: {
       signIn: "/login",
