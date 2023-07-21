@@ -35,7 +35,7 @@ export function useSideMenu() {
       onClick: () => undefined,
     });
 
-    if (status === "authenticated" && asPath === "/")
+    if (status === "authenticated" && asPath === "/notes")
       buttonList.push({
         title: "공유하기",
         icon: <FaShare />,
