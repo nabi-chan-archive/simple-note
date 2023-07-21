@@ -1,8 +1,9 @@
-import Layout from "@/components/Layout";
-import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import { BiSupport } from "react-icons/bi";
 import { toast } from "react-toastify";
+
+import Layout from "@/components/Layout";
 
 export default function Welcome() {
   return (
@@ -27,7 +28,7 @@ export default function Welcome() {
           모든 소스코드는{" "}
           <a
             href="https://github.com/nabi-chan/simple-note"
-            className="font-bold text-primary link"
+            className="link font-bold text-primary"
           >
             이 레포지토리
           </a>{" "}

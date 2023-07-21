@@ -1,16 +1,17 @@
+import { useCycle } from "framer-motion";
+import { useAtomValue, useSetAtom } from "jotai";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { Fragment } from "react";
+import { BiSupport } from "react-icons/bi";
+import { FaPrint, FaShare } from "react-icons/fa";
+
+import ChannelTalkButton from "@/components/ChannelTalk/ChannelTalkButton";
 import ShareModal from "@/components/share/ShareModal";
 import SHARE_ATOM from "@/state/SHARE_ATOM";
 import TAB_ATOM from "@/state/TAB_ATOM";
 import { type Button } from "@/types/SideMenu";
 import { api } from "@/utils/api";
-import { useCycle } from "framer-motion";
-import { useAtomValue, useSetAtom } from "jotai";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { Fragment } from "react";
-import { FaPrint, FaShare } from "react-icons/fa";
-import { BiSupport } from "react-icons/bi";
-import ChannelTalkButton from "@/components/ChannelTalk/ChannelTalkButton";
 
 export function useSideMenu() {
   const { status } = useSession();

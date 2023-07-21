@@ -4,6 +4,7 @@ import {
   defaultBlockSchema,
 } from "@blocknote/core";
 import { useBlockNote, BlockNoteView } from "@blocknote/react";
+
 import { customBlockSchema } from "../blockSchema";
 import { slashCommands } from "../slashCommands";
 

@@ -1,8 +1,9 @@
-import { useSideMenu } from "@/components/Layout/ButtonMenu/hooks/useSideMenu";
-import CHANNEL_ATOM from "@/state/CHANNEL_ATOM";
 import { motion } from "framer-motion";
 import { useAtomValue } from "jotai";
 import { FaHamburger } from "react-icons/fa";
+
+import { useSideMenu } from "@/components/Layout/ButtonMenu/hooks/useSideMenu";
+import CHANNEL_ATOM from "@/state/CHANNEL_ATOM";
 
 export default function ButtonMenu() {
   const { isOpen, toggleOpen, buttonList, modal } = useSideMenu();

@@ -1,5 +1,5 @@
-import { type Tab } from "@/types/Tab";
-import { api } from "@/utils/api";
+import cuid from "cuid";
+import { useAtom } from "jotai";
 import {
   type ChangeEvent,
   type MouseEvent,
@@ -7,11 +7,11 @@ import {
   useCallback,
   useState,
 } from "react";
-import cuid from "cuid";
-import { useAtom } from "jotai";
-import TAB_ATOM from "@/state/TAB_ATOM";
 import { toast } from "react-toastify";
-import { throttle } from "throttle-debounce";
+
+import TAB_ATOM from "@/state/TAB_ATOM";
+import { type Tab } from "@/types/Tab";
+import { api } from "@/utils/api";
 
 export function useTabList() {
   const lastSelectedTab = globalThis.localStorage?.getItem("lastSelectedTab");

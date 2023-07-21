@@ -1,6 +1,7 @@
-import { env } from "@/env.mjs";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+
+import { env } from "@/env.mjs";
 
 export const pageView = (url: URL) => {
   window.gtag("config", env.NEXT_PUBLIC_GA_TRACKING_ID ?? "", {

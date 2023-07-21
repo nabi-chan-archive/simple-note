@@ -1,5 +1,6 @@
-import { type Tab } from "@/types/Tab";
 import { atom } from "jotai";
+
+import { type Tab } from "@/types/Tab";
 
 const tabList = atom<Tab[]>([]);
 tabList.debugLabel = "tabList";

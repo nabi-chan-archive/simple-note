@@ -1,9 +1,10 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import { getToken, type JWT } from "next-auth/jwt";
 import superjson from "superjson";
 import { ZodError } from "zod";
+
 import { prisma } from "@/server/db";
-import { getToken, type JWT } from "next-auth/jwt";
 
 type CreateContextOptions = {
   token: JWT | null;

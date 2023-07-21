@@ -1,20 +1,21 @@
-import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
-import { type AppType } from "next/app";
-import { api } from "@/utils/api";
 import "@/styles/globals.css";
 import "@blocknote/core/style.css";
 import "react-toastify/dist/ReactToastify.css";
-import Head from "next/head";
-import { JetBrains_Mono } from "next/font/google";
-import { DevTools } from "jotai-devtools";
 import { Provider, createStore } from "jotai";
+import { DevTools } from "jotai-devtools";
+import { type AppType } from "next/app";
 import dynamic from "next/dynamic";
+import { JetBrains_Mono } from "next/font/google";
+import Head from "next/head";
 import Script from "next/script";
+import { type Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
+import { ToastContainer } from "react-toastify";
+
+import ErrorBoundary from "@/components/ErrorBoundary";
 import { env } from "@/env.mjs";
 import * as gTag from "@/hooks/useGtag";
-import { ToastContainer } from "react-toastify";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import { api } from "@/utils/api";
 
 const ChannelTalk = dynamic(() => import("@/components/ChannelTalk"), {
   ssr: false,

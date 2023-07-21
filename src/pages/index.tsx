@@ -1,12 +1,16 @@
-import Layout from "@/components/Layout";
 import { type GetServerSidePropsContext } from "next";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+
+import Layout from "@/components/Layout";
 
 export default function Home() {
   return (
     <Layout>
-      <section id="hero" className="hero h-1/2 min-h-[500px] flex justify-center items-center">
+      <section
+        id="hero"
+        className="hero flex h-1/2 min-h-[500px] items-center justify-center"
+      >
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="mb-4 text-center text-4xl font-bold">Simple Note</h1>

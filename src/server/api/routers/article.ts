@@ -1,7 +1,8 @@
-import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { TRPCError } from "@trpc/server";
 import { type BlockSchema, type PartialBlock } from "@blocknote/core";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+
+import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const articleRouter = createTRPCRouter({
   getArticle: protectedProcedure

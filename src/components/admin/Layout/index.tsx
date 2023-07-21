@@ -1,6 +1,7 @@
-import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 import { type ReactNode } from "react";
+
 import NotFound from "@/pages/404";
 
 type AdminLayoutProps = {
@@ -56,7 +57,7 @@ export default function AdminLayout({ children, className }: AdminLayoutProps) {
             </li>
           </ul>
         </nav>
-        <main className="flex-1 p-4 overflow-x-hidden">
+        <main className="flex-1 overflow-x-hidden p-4">
           <div className={className}>{children}</div>
         </main>
       </div>

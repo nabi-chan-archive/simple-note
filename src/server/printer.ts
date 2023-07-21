@@ -3,14 +3,14 @@ import {
   type Block,
   type InlineContent,
 } from "@blocknote/core";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import {
   CharacterSet,
   PrinterTypes,
   ThermalPrinter,
 } from "node-thermal-printer";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
-import dayjs from "dayjs";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);

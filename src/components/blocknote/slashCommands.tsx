@@ -1,6 +1,6 @@
 import { ReactSlashMenuItem } from "@blocknote/react";
-import { RiH1, RiText, RiListCheck, RiListOrdered } from "react-icons/ri";
 import { AiOutlineDash } from "react-icons/ai";
+import { RiH1, RiText, RiListCheck, RiListOrdered } from "react-icons/ri";
 
 export const slashCommands = [
   new ReactSlashMenuItem(

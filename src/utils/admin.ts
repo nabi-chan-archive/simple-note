@@ -7,6 +7,6 @@ export function getDiff(a: number, b: number) {
 
   return {
     diff: Math.abs(a - b),
-    text
-  }
+    text,
+  };
 }

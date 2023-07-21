@@ -1,18 +1,19 @@
-import Layout from "@/components/Layout";
-import EditorSkeleton from "@/components/blocknote/Editor/Skeleton";
-import { api } from "@/utils/api";
 import { type BlockSchema, type PartialBlock } from "@blocknote/core";
-import dynamic from "next/dynamic";
-import Image from "next/image";
 import dayjs from "dayjs";
-import Head from "next/head";
-import Link from "next/link";
-import NotFound from "@/pages/404";
 import {
   type GetServerSidePropsContext,
   type InferGetServerSidePropsType,
 } from "next";
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+
+import EditorSkeleton from "@/components/blocknote/Editor/Skeleton";
+import Layout from "@/components/Layout";
+import NotFound from "@/pages/404";
 import { prisma } from "@/server/db";
+import { api } from "@/utils/api";
 
 const Viewer = dynamic(() => import("@/components/blocknote/Viewer"), {
   ssr: false,

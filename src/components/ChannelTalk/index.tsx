@@ -1,10 +1,11 @@
+import { useSetAtom } from "jotai";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+
 import ChannelService from "@/client/ChannelTalk";
 import { env } from "@/env.mjs";
 import CHANNEL_ATOM from "@/state/CHANNEL_ATOM";
 import { api } from "@/utils/api";
-import { useSetAtom } from "jotai";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 
 export default function ChannelTalk() {
   const { data, status } = useSession();

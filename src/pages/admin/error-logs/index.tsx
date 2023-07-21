@@ -1,7 +1,8 @@
-import AdminLayout from "@/components/admin/Layout";
-import { prisma } from "@/server/db";
 import dayjs from "dayjs";
 import { type InferGetServerSidePropsType } from "next";
+
+import AdminLayout from "@/components/admin/Layout";
+import { prisma } from "@/server/db";
 
 type AdminUsersProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
@@ -40,8 +41,8 @@ export async function getServerSideProps() {
       where: {
         level: "error",
         ip: {
-          notIn: ["127.0.0.1"]
-        }
+          notIn: ["127.0.0.1"],
+        },
       },
       orderBy: {
         id: "asc",

@@ -1,13 +1,14 @@
+import { type InferGetServerSidePropsType } from "next";
+
 import AdminLayout from "@/components/admin/Layout";
 import { prisma } from "@/server/db";
-import { type InferGetServerSidePropsType } from "next";
 
 type AdminUsersProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export default function AdminUsersAdmin({ users }: AdminUsersProps) {
   return (
-    <AdminLayout className="overflow-x-auto w-full">
-        <table className="table w-full">
+    <AdminLayout className="w-full overflow-x-auto">
+      <table className="table w-full">
         <thead>
           <tr>
             <th>ID</th>
@@ -39,7 +40,7 @@ export async function getServerSideProps() {
       level: "Admin",
     },
     orderBy: {
-      id: "asc"
+      id: "asc",
     },
     include: {
       article: {

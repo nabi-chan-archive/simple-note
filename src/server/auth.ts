@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { type User as PrismaUser } from "@prisma/client";
 import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
@@ -7,10 +8,10 @@ import {
 } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+
+import { featureFlag } from "@/constants/featureFlag";
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
-import { type User as PrismaUser } from "@prisma/client";
-import { featureFlag } from "@/constants/featureFlag";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
@@ -48,7 +49,9 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
-    ...(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET && featureFlag.googleLogin
+    ...(env.GOOGLE_CLIENT_ID &&
+    env.GOOGLE_CLIENT_SECRET &&
+    featureFlag.googleLogin
       ? [
           GoogleProvider({
             clientId: env.GOOGLE_CLIENT_ID ?? "",

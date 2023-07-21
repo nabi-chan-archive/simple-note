@@ -1,4 +1,5 @@
 import { useAtomValue } from "jotai";
+
 import CHANNEL_ATOM from "@/state/CHANNEL_ATOM";
 import { type CustomButtonProps } from "@/types/SideMenu";
 

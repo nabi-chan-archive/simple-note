@@ -1,9 +1,10 @@
+import dayjs from "dayjs";
+import { type InferGetServerSidePropsType } from "next";
+
 import AdminLayout from "@/components/admin/Layout";
 import Card from "@/components/admin/Layout/dashboard/Card";
 import { prisma } from "@/server/db";
 import { getDiff } from "@/utils/admin";
-import dayjs from "dayjs";
-import { type InferGetServerSidePropsType } from "next";
 
 type DashboardProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
@@ -18,7 +19,7 @@ export default function Dashboard({
     todayArticleCount._count,
     yesterdayArticleCount._count
   );
-  
+
   return (
     <AdminLayout className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <Card title="가입한 유저">

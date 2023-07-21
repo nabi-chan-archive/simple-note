@@ -1,14 +1,16 @@
-import { FaPlus } from "react-icons/fa";
-import { FaXmark } from "react-icons/fa6";
 import { useState, type MouseEvent, startTransition } from "react";
-import { type Tab } from "@/types/Tab";
 import {
   DragDropContext,
   Draggable,
   type DropResult,
 } from "react-beautiful-dnd";
-import { StrictModeDroppable } from "../utils/droppable";
+import { FaPlus } from "react-icons/fa";
+import { FaXmark } from "react-icons/fa6";
+
+import { type Tab } from "@/types/Tab";
 import { api } from "@/utils/api";
+
+import { StrictModeDroppable } from "../utils/droppable";
 
 type TabListProps = {
   tabList: Tab[];

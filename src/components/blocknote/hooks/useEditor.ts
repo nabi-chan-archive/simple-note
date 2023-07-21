@@ -1,13 +1,14 @@
-import { useBlockNote } from "@blocknote/react";
 import {
   type BlockNoteEditor,
   type BlockSchema,
   defaultBlockSchema,
 } from "@blocknote/core";
-import { slashCommands } from "@/components/blocknote/slashCommands";
-import { customBlockSchema } from "@/components/blocknote/blockSchema";
-import { api } from "@/utils/api";
+import { useBlockNote } from "@blocknote/react";
 import { debounce } from "throttle-debounce";
+
+import { customBlockSchema } from "@/components/blocknote/blockSchema";
+import { slashCommands } from "@/components/blocknote/slashCommands";
+import { api } from "@/utils/api";
 
 type useEditorArgs = {
   currentTabId: string;

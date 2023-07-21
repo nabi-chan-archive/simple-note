@@ -1,5 +1,7 @@
-import Modal from "../utils/Modal";
 import { FaCopy } from "react-icons/fa";
+
+import Modal from "../utils/Modal";
+
 import { useShare } from "./hooks/useShare";
 
 export default function ShareModal() {

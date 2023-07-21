@@ -1,9 +1,10 @@
-import { printerSchema } from "@/schema/form/printer";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { type Block, type BlockSchema } from "@blocknote/core";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+
+import { printerSchema } from "@/schema/form/printer";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { print } from "@/server/printer";
-import { type Block, type BlockSchema } from "@blocknote/core";
 
 export const printerRouter = createTRPCRouter({
   getPrinter: protectedProcedure.query(({ ctx }) => {

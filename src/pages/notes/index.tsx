@@ -1,9 +1,10 @@
-import { useTabList } from "@/components/TabList/hooks/useTabList";
-import TabListSkeleton from "@/components/TabList/Skeleton";
-import EditorSkeleton from "@/components/blocknote/Editor/Skeleton";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+
+import EditorSkeleton from "@/components/blocknote/Editor/Skeleton";
 import Layout from "@/components/Layout";
+import { useTabList } from "@/components/TabList/hooks/useTabList";
+import TabListSkeleton from "@/components/TabList/Skeleton";
 
 const TabList = dynamic(() => import("@/components/TabList"), {
   loading: () => <TabListSkeleton />,

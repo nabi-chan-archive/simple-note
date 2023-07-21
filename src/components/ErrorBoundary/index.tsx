@@ -1,6 +1,8 @@
-import { api } from "@/utils/api";
 import { type ReactNode } from "react";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
+
+import { api } from "@/utils/api";
+
 import ErrorComponent from "../Error";
 
 type ErrorBoundaryProps = {

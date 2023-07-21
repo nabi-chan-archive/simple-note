@@ -1,10 +1,10 @@
+import { josa } from "josa";
 import {
   type InferGetServerSidePropsType,
   type GetServerSidePropsContext,
 } from "next";
-import { getProviders, signIn } from "next-auth/react";
-import { josa } from "josa";
 import { getToken } from "next-auth/jwt";
+import { getProviders, signIn } from "next-auth/react";
 
 export default function Login({
   providers,
@@ -22,7 +22,8 @@ export default function Login({
             >
               {josa(
                 `${
-                  { GitHub: "GitHub", "Google": "Google" }[provider.name] ?? "아무거나"
+                  { GitHub: "GitHub", Google: "Google" }[provider.name] ??
+                  "아무거나"
                 }#{으로} 로그인하기`
               )}
             </button>

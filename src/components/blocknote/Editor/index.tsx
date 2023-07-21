@@ -1,8 +1,9 @@
-import { useEditor } from "@/components/blocknote/hooks/useEditor";
-import { api } from "@/utils/api";
 import { BlockNoteView } from "@blocknote/react";
-import { type Tab } from "@/types/Tab";
 import { type ChangeEvent, useState } from "react";
+
+import { useEditor } from "@/components/blocknote/hooks/useEditor";
+import { type Tab } from "@/types/Tab";
+import { api } from "@/utils/api";
 
 type EditorProps = {
   currentTab: Tab;

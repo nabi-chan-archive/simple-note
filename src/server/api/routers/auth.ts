@@ -1,7 +1,9 @@
+import crypto from "crypto";
+
+import { TRPCError } from "@trpc/server";
+
 import { env } from "@/env.mjs";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
-import { TRPCError } from "@trpc/server";
-import crypto from "crypto";
 
 export const authRouter = createTRPCRouter({
   getChannelHash: protectedProcedure.query(({ ctx }) => {
