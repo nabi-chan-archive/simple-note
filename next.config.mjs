@@ -1,4 +1,14 @@
+import mdx from "@next/mdx";
+import remarkGfm from 'remark-gfm'
 await import("./src/env.mjs");
+
+const withMDX = mdx({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [],
+  },
+})
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -8,9 +18,10 @@ const config = {
     defaultLocale: "en",
   },
   images: {
-    domains: ["avatars.githubusercontent.com"],
+    domains: ["avatars.githubusercontent.com", "lh3.googleusercontent.com"],
   },
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   transpilePackages: ["jotai-devtools"],
 };
 
-export default config;
+export default withMDX(config);
