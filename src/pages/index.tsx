@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <Layout>
-      <section id="hero" className="hero h-1/2 min-h-[500px]">
+      <section id="hero" className="hero h-1/2 min-h-[500px] flex justify-center items-center">
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="mb-4 text-center text-4xl font-bold">Simple Note</h1>
