@@ -1,16 +1,9 @@
 import Layout from "@/components/Layout";
-import { useSession } from "next-auth/react";
+import { type GetServerSidePropsContext } from "next";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 export default function Home() {
-  const { status } = useSession();
-  const { replace } = useRouter();
-
-  if (status === "authenticated") {
-    void replace("/notes");
-  }
-
   return (
     <Layout>
       <section id="hero" className="hero h-1/2 min-h-[500px]">
@@ -39,7 +32,8 @@ export default function Home() {
             <br />
             광고도, 가격 정책도, 복잡한 회원가입도 없습니다.
             <br />
-            시작하기 버튼을 누르고 (아마도) 세상에서 간단한 노트 앱을 만나보세요.
+            시작하기 버튼을 누르고 (아마도) 세상에서 간단한 노트 앱을
+            만나보세요.
           </p>
         </div>
       </section>
@@ -111,4 +105,24 @@ export default function Home() {
       </section>
     </Layout>
   );
+}
+
+export async function getServerSideProps({
+  req,
+  res,
+}: GetServerSidePropsContext) {
+  const session = await getServerSession(req, res, {});
+
+  if (session?.user) {
+    return {
+      redirect: {
+        destination: "/notes",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }
