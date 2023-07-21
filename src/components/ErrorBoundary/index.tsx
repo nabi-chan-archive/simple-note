@@ -1,8 +1,7 @@
 import { api } from "@/utils/api";
-import Link from "next/link";
 import { type ReactNode } from "react";
 import { ErrorBoundary as ReactErrorBoundary } from "react-error-boundary";
-import Layout from "../Layout";
+import ErrorComponent from "../Error";
 
 type ErrorBoundaryProps = {
   children: ReactNode;
@@ -31,23 +30,10 @@ export default function ErrorBoundary({ children }: ErrorBoundaryProps) {
         }
 
         return (
-          <Layout>
-            <main className="flex flex-col items-center gap-3 py-48">
-              <h1 className="text-2xl font-bold">이런!</h1>
-              <p>오류가 발생했어요</p>
-              <div className="mt-4 flex gap-2">
-                <button
-                  className="btn btn-secondary btn-sm"
-                  onClick={resetErrorBoundary}
-                >
-                  다시 시도해볼래요
-                </button>
-                <Link href="/" className="btn btn-primary btn-sm">
-                  돌아갈래요
-                </Link>
-              </div>
-            </main>
-          </Layout>
+          <ErrorComponent
+            title="오류가 발생했어요"
+            resetErrorBoundary={resetErrorBoundary}
+          />
         );
       }}
     >
