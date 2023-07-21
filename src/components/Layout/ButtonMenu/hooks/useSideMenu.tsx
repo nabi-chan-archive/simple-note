@@ -43,7 +43,7 @@ export function useSideMenu() {
         modal: <ShareModal />,
       });
 
-    if (printer && asPath === "/") {
+    if (printer && asPath === "/notes") {
       buttonList.push({
         title: "프린트하기",
         icon: <FaPrint />,
