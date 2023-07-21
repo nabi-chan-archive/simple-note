@@ -33,6 +33,11 @@ GITHUB_CLIENT_ID=""
 # required
 GITHUB_CLIENT_SECRET=""
 
+# optional
+GOOGLE_CLIENT_ID=""
+# optional
+GOOGLE_CLIENT_SECRET=""
+
 # required
 # make equal with service url
 NEXT_PUBLIC_BASE_URL="http://localhost:3000"

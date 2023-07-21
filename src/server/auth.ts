@@ -6,9 +6,11 @@ import {
   type DefaultSession,
 } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
-import { type User as PrismaUser } from "@prisma/client"
+import { type User as PrismaUser } from "@prisma/client";
+import { featureFlag } from "@/constants/featureFlag";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
@@ -31,7 +33,7 @@ export const authOptions: NextAuthOptions = {
       if (user?.level && user?.level !== "User") {
         token.level = user?.level;
       }
-      return token
+      return token;
     },
     session({ session, token }) {
       if (session.user && token.sub) {
@@ -46,6 +48,14 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
+    ...(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET && featureFlag.googleLogin
+      ? [
+          GoogleProvider({
+            clientId: env.GOOGLE_CLIENT_ID ?? "",
+            clientSecret: env.GOOGLE_CLIENT_SECRET ?? "",
+          }),
+        ]
+      : []),
   ],
   pages: {
     signIn: "/login",
