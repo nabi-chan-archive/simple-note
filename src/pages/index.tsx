@@ -109,11 +109,6 @@ export default function Home() {
           </ul>
         </div>
       </section>
-      <aside className="pb-4 pt-16 text-center">
-        <Link href="https://nabi.kim" className="link-primary link text-xs">
-          Made With 💚 By Nabi
-        </Link>
-      </aside>
     </Layout>
   );
 }
