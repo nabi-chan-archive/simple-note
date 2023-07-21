@@ -1,8 +1,9 @@
 import { type GetServerSidePropsContext } from "next";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 
-import Layout from "@/components/Layout";
+const Layout = dynamic(() => import("@/components/Layout"));
 
 export default function Home() {
   return (

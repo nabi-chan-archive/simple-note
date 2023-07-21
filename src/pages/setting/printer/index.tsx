@@ -1,10 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
-import Layout from "@/components/Layout";
 import { type PrinterSchemaValues, printerSchema } from "@/schema/form/printer";
 import { api } from "@/utils/api";
+
+const Layout = dynamic(() => import("@/components/Layout"));
 
 export default function SettingPrinter() {
   const trpc = api.useContext();

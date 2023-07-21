@@ -1,5 +1,8 @@
-import Layout from "@/components/Layout";
+import dynamic from "next/dynamic";
+
 import Policy from "@/docs/policy.mdx";
+
+const Layout = dynamic(() => import("@/components/Layout"));
 
 export default function PolicyPage() {
   return (

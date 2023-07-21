@@ -1,9 +1,10 @@
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { BiSupport } from "react-icons/bi";
 import { toast } from "react-toastify";
 
-import Layout from "@/components/Layout";
+const Layout = dynamic(() => import("@/components/Layout"));
 
 export default function Welcome() {
   return (

@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import "@blocknote/core/style.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Provider, createStore } from "jotai";
+import { createStore } from "jotai";
 import { DevTools } from "jotai-devtools";
 import { type AppType } from "next/app";
 import dynamic from "next/dynamic";
@@ -9,13 +9,22 @@ import { JetBrains_Mono } from "next/font/google";
 import Head from "next/head";
 import Script from "next/script";
 import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
-import { ToastContainer } from "react-toastify";
 
-import ErrorBoundary from "@/components/ErrorBoundary";
 import { env } from "@/env.mjs";
 import * as gTag from "@/hooks/useGtag";
 import { api } from "@/utils/api";
+
+const SessionProvider = dynamic(() =>
+  import("next-auth/react").then((mod) => mod.SessionProvider)
+);
+
+const Provider = dynamic(() => import("jotai").then((mod) => mod.Provider));
+
+const ToastContainer = dynamic(() =>
+  import("react-toastify").then((mod) => mod.ToastContainer)
+);
+
+const ErrorBoundary = dynamic(() => import("@/components/ErrorBoundary"));
 
 const ChannelTalk = dynamic(() => import("@/components/ChannelTalk"), {
   ssr: false,

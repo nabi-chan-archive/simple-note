@@ -1,6 +1,7 @@
+import dynamic from "next/dynamic";
 import Link from "next/link";
 
-import Layout from "../Layout";
+const Layout = dynamic(() => import("@/components/Layout"));
 
 type ErrorProps = {
   title?: string;

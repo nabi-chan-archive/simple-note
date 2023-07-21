@@ -10,10 +10,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 import EditorSkeleton from "@/components/blocknote/Editor/Skeleton";
-import Layout from "@/components/Layout";
-import NotFound from "@/pages/404";
 import { prisma } from "@/server/db";
 import { api } from "@/utils/api";
+
+const Layout = dynamic(() => import("@/components/Layout"));
+const NotFound = dynamic(() => import("@/components/Error"));
 
 const Viewer = dynamic(() => import("@/components/blocknote/Viewer"), {
   ssr: false,
@@ -31,7 +32,7 @@ export default function ShareArticlePage({
   const initialContent = data?.article.content as PartialBlock<BlockSchema>[];
 
   if ((!isLoading && !data) || data?.isShareActive === false)
-    return <NotFound />;
+    return <NotFound title="페이지를 찾을 수 없어요" />;
 
   if (!isLoading && dayjs(data?.expiredAt).isBefore(dayjs()))
     return (
