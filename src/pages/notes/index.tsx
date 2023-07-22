@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { Suspense } from "react";
 
 import EditorSkeleton from "@/components/blocknote/Editor/Skeleton";
@@ -26,25 +27,32 @@ export default function Notes() {
   } = useTabList();
 
   return (
-    <Layout>
-      {isLoading ? (
-        <TabListSkeleton />
-      ) : (
-        <TabList
-          tabList={tabList}
-          newTab={newTab}
-          isCurrentTab={isCurrentTab}
-          removeTab={removeTab}
-          setTab={setTab}
-        />
-      )}
-      {isLoading ? (
-        <EditorSkeleton />
-      ) : (
-        <Suspense fallback={<EditorSkeleton />}>
-          <Editor currentTab={currentTab} />
-        </Suspense>
-      )}
-    </Layout>
+    <>
+      <Head>
+        <title>
+          {(currentTab?.title ?? "Loading") + " - nabi-simple-note"}
+        </title>
+      </Head>
+      <Layout>
+        {isLoading ? (
+          <TabListSkeleton />
+        ) : (
+          <TabList
+            tabList={tabList}
+            newTab={newTab}
+            isCurrentTab={isCurrentTab}
+            removeTab={removeTab}
+            setTab={setTab}
+          />
+        )}
+        {isLoading ? (
+          <EditorSkeleton />
+        ) : (
+          <Suspense fallback={<EditorSkeleton />}>
+            <Editor currentTab={currentTab} />
+          </Suspense>
+        )}
+      </Layout>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
@@ -55,54 +56,59 @@ export default function SettingPrinter() {
   };
 
   return (
-    <Layout>
-      <h1 className="mb-4 text-2xl font-bold">🖨️ 프린터 설정</h1>
+    <>
+      <Head>
+        <title>프린터 설정 - nabi-simple-note</title>
+      </Head>
+      <Layout>
+        <h1 className="mb-4 text-2xl font-bold">🖨️ 프린터 설정</h1>
 
-      <form onSubmit={(e) => void handleSubmit(e)}>
-        <label className="mb-4 flex items-center gap-4">
-          <span className="flex-1 font-bold">프린터 IP</span>
-          <input
-            {...register("ip", {
-              required: true,
-            })}
-            type="text"
-            className="input input-bordered flex-[3]"
-            placeholder="192.168.0.3"
-            defaultValue={printer?.ip}
-          />
-        </label>
-        <label className="mb-4 flex items-center gap-4">
-          <span className="flex-1 font-bold">프린터 포트</span>
-          <input
-            {...register("port", {
-              required: true,
-            })}
-            type="text"
-            className="input input-bordered flex-[3]"
-            placeholder="9100"
-            defaultValue={printer?.port}
-          />
-        </label>
+        <form onSubmit={(e) => void handleSubmit(e)}>
+          <label className="mb-4 flex items-center gap-4">
+            <span className="flex-1 font-bold">프린터 IP</span>
+            <input
+              {...register("ip", {
+                required: true,
+              })}
+              type="text"
+              className="input input-bordered flex-[3]"
+              placeholder="192.168.0.3"
+              defaultValue={printer?.ip}
+            />
+          </label>
+          <label className="mb-4 flex items-center gap-4">
+            <span className="flex-1 font-bold">프린터 포트</span>
+            <input
+              {...register("port", {
+                required: true,
+              })}
+              type="text"
+              className="input input-bordered flex-[3]"
+              placeholder="9100"
+              defaultValue={printer?.port}
+            />
+          </label>
 
-        <div className="mt-16 flex justify-end gap-2">
-          {printer ? (
-            <button
-              type="button"
-              className="btn btn-secondary btn-sm"
-              onClick={() => void handlePrinterDelete()}
-            >
-              연동해제하기
-            </button>
-          ) : (
-            <button type="submit" className="btn btn-primary btn-sm">
-              연동하기
-            </button>
-          )}
-          <Link href="/" className="btn btn-ghost btn-sm">
-            취소하기
-          </Link>
-        </div>
-      </form>
-    </Layout>
+          <div className="mt-16 flex justify-end gap-2">
+            {printer ? (
+              <button
+                type="button"
+                className="btn btn-secondary btn-sm"
+                onClick={() => void handlePrinterDelete()}
+              >
+                연동해제하기
+              </button>
+            ) : (
+              <button type="submit" className="btn btn-primary btn-sm">
+                연동하기
+              </button>
+            )}
+            <Link href="/" className="btn btn-ghost btn-sm">
+              취소하기
+            </Link>
+          </div>
+        </form>
+      </Layout>
+    </>
   );
 }
