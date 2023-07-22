@@ -8,6 +8,7 @@ import {
 } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import KakaoProvider from "next-auth/providers/kakao";
 
 import { featureFlag } from "@/constants/featureFlag";
 import { env } from "@/env.mjs";
@@ -56,6 +57,14 @@ export const authOptions: NextAuthOptions = {
           GoogleProvider({
             clientId: env.GOOGLE_CLIENT_ID ?? "",
             clientSecret: env.GOOGLE_CLIENT_SECRET ?? "",
+          }),
+        ]
+      : []),
+    ...(env.KAKAO_CLIENT_ID && env.KAKAO_CLIENT_SECRET && featureFlag.kakaoLogin
+      ? [
+          KakaoProvider({
+            clientId: env.KAKAO_CLIENT_ID ?? "",
+            clientSecret: env.KAKAO_CLIENT_SECRET ?? "",
           }),
         ]
       : []),

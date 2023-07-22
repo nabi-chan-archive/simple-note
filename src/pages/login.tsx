@@ -22,8 +22,9 @@ export default function Login({
             >
               {josa(
                 `${
-                  { GitHub: "GitHub", Google: "Google" }[provider.name] ??
-                  "아무거나"
+                  { GitHub: "GitHub", Google: "Google", Kakao: "카카오톡" }[
+                    provider.name
+                  ] ?? "아무거나"
                 }#{으로} 로그인하기`
               )}
             </button>

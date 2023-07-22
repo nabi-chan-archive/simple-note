@@ -89,7 +89,7 @@ export default function Home() {
           <h1 className="mb-2 text-2xl font-bold">🌱 이런 기능들이 있습니다</h1>
           <ul className="mb-4 list-inside list-disc leading-8">
             <li>클라우드 기반의 노트 CRUD</li>
-            <li>GitHub 기반의 oAuth 인증</li>
+            <li>GitHub / 카카오 기반의 소셜 로그인</li>
             <li>(영수증) 프린터 인쇄 기능</li>
             <li>웹사이트 공유 기능</li>
           </ul>
