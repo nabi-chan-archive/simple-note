@@ -50,7 +50,12 @@ export default function ShareArticlePage({
   return (
     <Layout>
       <Head>
-        <title>{title} - nabi-simple-note</title>
+        <title>{`${title} - nabi-simple-note`}</title>
+        <meta
+          key="og:title"
+          property="og:title"
+          content={`${title} - nabi-simple-note`}
+        />
       </Head>
       <main className="px-4 pb-4 sm:mx-0">
         <header className="mb-4 flex flex-col gap-4 sm:flex-row">
