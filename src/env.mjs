@@ -36,12 +36,12 @@ export const env = createEnv({
   },
   runtimeEnv: {
     // feature flag
-    NEXT_PUBLIC_FEATURE_FLAG_SHARE: process.env.FEATURE_FLAG_SHARE,
-    FEATURE_FLAG_SHARE: process.env.FEATURE_FLAG_SHARE,
+    NEXT_PUBLIC_FEATURE_FLAG_SHARE: process.env.FEATURE_FLAG_SHARE === "true",
+    FEATURE_FLAG_SHARE: process.env.FEATURE_FLAG_SHARE === "true",
     NEXT_PUBLIC_FEATURE_FLAG_GOOGLE_LOGIN:
-      process.env.NEXT_PUBLIC_FEATURE_FLAG_GOOGLE_LOGIN,
+      process.env.NEXT_PUBLIC_FEATURE_FLAG_GOOGLE_LOGIN === "true",
     NEXT_PUBLIC_FEATURE_FLAG_KAKAO_LOGIN:
-      process.env.NEXT_PUBLIC_FEATURE_FLAG_KAKAO_LOGIN,
+      process.env.NEXT_PUBLIC_FEATURE_FLAG_KAKAO_LOGIN === "true",
     // ENV
     NEXT_PUBLIC_BASE_URL:
       process.env.VERCEL_URL ?? process.env.NEXT_PUBLIC_BASE_URL,
