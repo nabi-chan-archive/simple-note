@@ -9,7 +9,9 @@ import { JetBrains_Mono } from "next/font/google";
 import Head from "next/head";
 import Script from "next/script";
 import { type Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
+import ChannelTalkProvider from "@/components/ChannelTalk";
 import { env } from "@/env.mjs";
 import * as gTag from "@/hooks/useGtag";
 import { api } from "@/utils/api";
@@ -67,10 +69,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
           />
         </Head>
         <SessionProvider session={session}>
-          <ErrorBoundary>
-            <Component {...pageProps} />
-          </ErrorBoundary>
-          <ChannelTalk />
+          <ChannelTalkProvider>
+            <ErrorBoundary>
+              <Component {...pageProps} />
+            </ErrorBoundary>
+          </ChannelTalkProvider>
         </SessionProvider>
         <DevTools />
       </Provider>

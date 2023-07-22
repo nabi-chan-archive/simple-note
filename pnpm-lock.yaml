@@ -80,6 +80,9 @@ dependencies:
   react-beautiful-dnd:
     specifier: ^13.1.1
     version: 13.1.1(react-dom@18.2.0)(react@18.2.0)
+  react-channel-plugin:
+    specifier: ^2.2.0
+    version: 2.2.0(fast-deep-equal@3.1.3)(react@18.2.0)(tslib@2.6.0)
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
@@ -9248,6 +9251,18 @@ packages:
       use-memo-one: 1.1.3(react@18.2.0)
     transitivePeerDependencies:
       - react-native
+    dev: false
+
+  /react-channel-plugin@2.2.0(fast-deep-equal@3.1.3)(react@18.2.0)(tslib@2.6.0):
+    resolution: {integrity: sha512-6WPDVpcFvIPVquhut+1fTyzNZcO6AIJK5P28QkLwqrpCz7Gf0vzI485zed3ysaEgqTfu0AFOfIxXZ+EUDl/yYQ==}
+    peerDependencies:
+      fast-deep-equal: '>=3.0.0'
+      react: ^16.8.0  || ^17.0.0 || ^18.0.0
+      tslib: '>=2.2.0'
+    dependencies:
+      fast-deep-equal: 3.1.3
+      react: 18.2.0
+      tslib: 2.6.0
     dev: false
 
   /react-dom@18.2.0(react@18.2.0):
