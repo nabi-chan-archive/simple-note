@@ -1,5 +1,6 @@
 import mdx from "@next/mdx";
-import remarkGfm from 'remark-gfm'
+import remarkGfm from "remark-gfm";
+
 await import("./src/env.mjs");
 
 const withMDX = mdx({
@@ -8,7 +9,7 @@ const withMDX = mdx({
     remarkPlugins: [remarkGfm],
     rehypePlugins: [],
   },
-})
+});
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -24,7 +25,7 @@ const config = {
       "k.kakaocdn.net",
     ],
   },
-  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   transpilePackages: ["jotai-devtools"],
 };
 
