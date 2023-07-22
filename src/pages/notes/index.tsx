@@ -16,15 +16,8 @@ const Editor = dynamic(() => import("@/components/blocknote/Editor"), {
 });
 
 export default function Notes() {
-  const {
-    isLoading,
-    tabList,
-    newTab,
-    isCurrentTab,
-    removeTab,
-    setTab,
-    currentTab,
-  } = useTabList();
+  const { isLoading, tabList, newTab, removeTab, setTab, currentTab } =
+    useTabList();
 
   return (
     <>
@@ -40,7 +33,6 @@ export default function Notes() {
           <TabList
             tabList={tabList}
             newTab={newTab}
-            isCurrentTab={isCurrentTab}
             removeTab={removeTab}
             setTab={setTab}
           />

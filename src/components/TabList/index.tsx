@@ -1,3 +1,4 @@
+import { useAtomValue } from "jotai";
 import { useState, type MouseEvent, startTransition } from "react";
 import {
   DragDropContext,
@@ -7,6 +8,7 @@ import {
 import { FaPlus } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 
+import TAB_ATOM from "@/state/TAB_ATOM";
 import { type Tab } from "@/types/Tab";
 import { api } from "@/utils/api";
 
@@ -16,7 +18,6 @@ type TabListProps = {
   tabList: Tab[];
 
   newTab: () => void;
-  isCurrentTab: (id: string) => boolean;
   removeTab: (id: string) => (e: MouseEvent<HTMLButtonElement>) => void;
   setTab: (id: string) => () => void;
 };
@@ -26,11 +27,13 @@ export default function TabList({
 
   newTab,
   removeTab,
-  isCurrentTab,
   setTab,
 }: TabListProps) {
   const [itemList, setItemList] = useState(tabList);
   const { mutate: reorderTab } = api.tab.reorderTab.useMutation();
+  const currentTabId = useAtomValue(TAB_ATOM.selectedTabId);
+
+  console.log(currentTabId);
 
   if (
     !!itemList.filter(
@@ -75,7 +78,7 @@ export default function TabList({
                       onClick={setTab(id)}
                       className={[
                         "item-container tab tab-bordered min-w-[200px] flex-1 flex-nowrap justify-between gap-2",
-                        isCurrentTab(id) ? "tab-active" : "",
+                        id === currentTabId ? "tab-active" : "",
                       ].join(" ")}
                       ref={provided.innerRef}
                       {...provided.dragHandleProps}

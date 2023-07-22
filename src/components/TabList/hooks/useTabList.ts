@@ -109,13 +109,6 @@ export function useTabList() {
     setCurrentTab(getTabFromId(id));
   };
 
-  const isCurrentTab = useCallback(
-    (id: string) => {
-      return id === currentTabId;
-    },
-    [currentTabId]
-  );
-
   if (!currentTabId && lastSelectedTab && dataTabList?.length) {
     if (!dataTabList.find(({ id }) => id === lastSelectedTab)) {
       setCurrentTab(dataTabList[0]);
@@ -143,6 +136,5 @@ export function useTabList() {
     renameTab,
     removeTab,
     setTab,
-    isCurrentTab,
   };
 }
