@@ -98,7 +98,8 @@ model Article {
     tab   Tab    @relation(fields: [tabId], references: [id], onDelete: Cascade)
     tabId String @unique @map("tab_id")
 
-    share Share?
+    isSaved Boolean @default(false)
+    share   Share?
 
     @@map("articles")
 }
