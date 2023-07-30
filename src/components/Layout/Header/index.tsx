@@ -40,9 +40,12 @@ export default function Header() {
             ) : null}
             <ul
               tabIndex={0}
-              className="menu dropdown-content rounded-box menu-sm z-[1] mt-3 w-52 bg-base-100 p-4 shadow"
+              className="menu dropdown-content rounded-box menu-sm z-[1] mt-3 bg-base-100 p-4 shadow"
             >
               <li className="p-2">안녕하세요, {userName}님!</li>
+              <li>
+                <Link href="/notes/saved">📝 | 저장된 노트 확인하기</Link>
+              </li>
               <li>
                 <Link href="/setting/printer">🖨️ | 프린터 설정하기</Link>
               </li>
