@@ -49,7 +49,7 @@ export function useSideMenu() {
         modal: <ShareModal />,
       });
 
-    if (printer && asPath === "/notes") {
+    if (printer && (asPath === "/notes" || asPath === "/notes/saved")) {
       buttonList.push({
         disabled: isPrinting,
         title: "프린트하기",
