@@ -25,6 +25,26 @@ export const articleRouter = createTRPCRouter({
       return response.content as PartialBlock<BlockSchema>[];
     }),
 
+  meta: protectedProcedure
+    .input(z.object({ tabId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const response = await ctx.prisma.article.findFirst({
+        where: {
+          tabId: input.tabId,
+          owner: {
+            id: ctx.token.sub,
+          },
+        },
+        select: {
+          createdAt: true,
+        },
+      });
+
+      if (!response) throw new TRPCError({ code: "NOT_FOUND" });
+
+      return response;
+    }),
+
   updateArticle: protectedProcedure
     .input(z.object({ tabId: z.string(), content: z.any().array() }))
     .mutation(({ input, ctx }) => {

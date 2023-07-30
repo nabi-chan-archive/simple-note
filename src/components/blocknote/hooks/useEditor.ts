@@ -11,10 +11,14 @@ import { slashCommands } from "@/components/blocknote/slashCommands";
 import { api } from "@/utils/api";
 
 type useEditorArgs = {
+  disabled?: boolean;
   currentTabId: string;
 };
 
-export function useEditor({ currentTabId }: useEditorArgs, deps: unknown[]) {
+export function useEditor(
+  { disabled, currentTabId }: useEditorArgs,
+  deps: unknown[]
+) {
   const { data: initialContent } = api.article.getArticle.useQuery(
     {
       tabId: currentTabId,
@@ -27,6 +31,7 @@ export function useEditor({ currentTabId }: useEditorArgs, deps: unknown[]) {
 
   const editor = useBlockNote(
     {
+      editable: !disabled,
       initialContent: initialContent ?? [],
       onEditorContentChange: debounce(
         750,

@@ -23,6 +23,26 @@ export const tabRouter = createTRPCRouter({
     });
   }),
 
+  savedList: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.tab.findMany({
+      where: {
+        owner: {
+          id: ctx.token?.sub,
+        },
+        article: {
+          isSaved: true,
+        },
+      },
+      select: {
+        id: true,
+        title: true,
+      },
+      orderBy: {
+        order: "asc",
+      },
+    });
+  }),
+
   createTab: protectedProcedure
     .input(
       z.object({

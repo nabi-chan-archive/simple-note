@@ -14,15 +14,26 @@ import { api } from "@/utils/api";
 
 import { StrictModeDroppable } from "../utils/droppable";
 
-type TabListProps = {
-  tabList: Tab[];
+type TabListProps =
+  | {
+      isSavedList?: never;
+      tabList: Tab[];
 
-  newTab: () => void;
-  removeTab: (id: string) => (e: MouseEvent<HTMLButtonElement>) => void;
-  setTab: (id: string) => () => void;
-};
+      newTab?: () => void;
+      removeTab?: (id: string) => (e: MouseEvent<HTMLButtonElement>) => void;
+      setTab: (id: string) => () => void;
+    }
+  | {
+      isSavedList: true;
+      tabList: Tab[];
+
+      newTab?: () => void;
+      removeTab?: (id: string) => (e: MouseEvent<HTMLButtonElement>) => void;
+      setTab: (id: string) => () => void;
+    };
 
 export default function TabList({
+  isSavedList,
   tabList,
 
   newTab,
@@ -86,14 +97,15 @@ export default function TabList({
                     >
                       <span className="truncate">{title || "무제"}</span>
 
-                      {tabList.length > 1 && (
-                        <button
-                          className="btn btn-square btn-ghost btn-xs"
-                          onClick={(e) => void removeTab(id)(e)}
-                        >
-                          <FaXmark />
-                        </button>
-                      )}
+                      {((!isSavedList && tabList.length > 1) || isSavedList) &&
+                        !!removeTab && (
+                          <button
+                            className="btn btn-square btn-ghost btn-xs"
+                            onClick={(e) => void removeTab(id)(e)}
+                          >
+                            <FaXmark />
+                          </button>
+                        )}
                     </div>
                   )}
                 </Draggable>
@@ -101,12 +113,14 @@ export default function TabList({
             })}
             {placeholder}
 
-            <button
-              className="btn btn-square btn-ghost btn-sm ml-2"
-              onClick={() => void newTab()}
-            >
-              <FaPlus />
-            </button>
+            {!!newTab && (
+              <button
+                className="btn btn-square btn-ghost btn-sm ml-2"
+                onClick={() => void newTab()}
+              >
+                <FaPlus />
+              </button>
+            )}
           </nav>
         )}
       </StrictModeDroppable>
