@@ -2,18 +2,15 @@ import dayjs from "dayjs";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { Suspense } from "react";
+import { FaTimes } from "react-icons/fa";
 
 import EditorSkeleton from "@/components/blocknote/Editor/Skeleton";
 import Error from "@/components/Error";
 import { useSavedTabList } from "@/components/TabList/hooks/useSavedTabList";
-import TabListSkeleton from "@/components/TabList/Skeleton";
 import { api } from "@/utils/api";
 
 const Layout = dynamic(() => import("@/components/Layout"));
 
-const TabList = dynamic(() => import("@/components/TabList"), {
-  loading: () => <TabListSkeleton />,
-});
 const Viewer = dynamic(() => import("@/components/blocknote/Viewer"), {
   ssr: false,
   loading: () => <EditorSkeleton />,
@@ -56,8 +53,14 @@ export default function Notes() {
             <ul className="menu menu-sm w-48">
               <li className="menu-title">저장된 글들</li>
               {tabList.map((tab) => (
-                <li key={tab.id}>
-                  <button>{tab.title}</button>
+                <li role="button" onClick={setTab(tab.id)} key={tab.id}>
+                  <span className="flex justify-between">
+                    {tab.title}
+
+                    <button onClick={removeTab(tab.id)}>
+                      <FaTimes />
+                    </button>
+                  </span>
                 </li>
               ))}
             </ul>
