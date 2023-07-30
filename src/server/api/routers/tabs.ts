@@ -9,6 +9,9 @@ export const tabRouter = createTRPCRouter({
         owner: {
           id: ctx.token?.sub,
         },
+        article: {
+          isSaved: false,
+        },
       },
       select: {
         id: true,

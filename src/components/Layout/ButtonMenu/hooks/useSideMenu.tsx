@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Fragment } from "react";
 import { BiSupport } from "react-icons/bi";
-import { FaPrint, FaShare } from "react-icons/fa";
+import { FaPrint, FaSave, FaShare } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 import ChannelTalkButton from "@/components/ChannelTalk/ChannelTalkButton";
 import ShareModal from "@/components/share/ShareModal";
@@ -16,11 +17,13 @@ import { api } from "@/utils/api";
 export function useSideMenu() {
   const { status } = useSession();
   const { asPath } = useRouter();
+  const trpc = api.useContext();
   const { data: printer } = api.printer.getPrinter.useQuery(undefined, {
     enabled: status === "authenticated",
   });
   const { mutate: print, isLoading: isPrinting } =
     api.printer.printArticle.useMutation();
+  const { mutate: save } = api.article.save.useMutation();
 
   const [isOpen, toggleOpen] = useCycle(false, true);
 
@@ -52,6 +55,24 @@ export function useSideMenu() {
         icon: <FaPrint />,
         onClick: function (): void {
           print({ id: selectedTabId });
+        },
+      });
+    }
+
+    if (asPath === "/notes") {
+      buttonList.push({
+        title: "보관하기",
+        icon: <FaSave />,
+        onClick: function (): void {
+          save(
+            { tabId: selectedTabId, isSaved: true },
+            {
+              onSuccess: () => {
+                toast.success("보관함에 저장되었습니다.");
+                void trpc.tab.getTabList.invalidate();
+              },
+            }
+          );
         },
       });
     }

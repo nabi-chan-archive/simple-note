@@ -40,4 +40,20 @@ export const articleRouter = createTRPCRouter({
         },
       });
     }),
+
+  save: protectedProcedure
+    .input(z.object({ tabId: z.string(), isSaved: z.boolean().nullish() }))
+    .mutation(({ input, ctx }) => {
+      return ctx.prisma.article.update({
+        where: {
+          tabId: input.tabId,
+          owner: {
+            id: ctx.token.sub,
+          },
+        },
+        data: {
+          isSaved: input.isSaved ?? false,
+        },
+      });
+    }),
 });
