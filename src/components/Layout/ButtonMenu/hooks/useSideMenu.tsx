@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { Fragment } from "react";
 import { BiSupport } from "react-icons/bi";
 import { FaPrint, FaSave, FaShare } from "react-icons/fa";
+import { FaUpload } from "react-icons/fa6";
 import { toast } from "react-toastify";
 
 import ChannelTalkButton from "@/components/ChannelTalk/ChannelTalkButton";
@@ -70,6 +71,24 @@ export function useSideMenu() {
               onSuccess: () => {
                 toast.success("보관함에 저장되었습니다.");
                 void trpc.tab.getTabList.invalidate();
+              },
+            }
+          );
+        },
+      });
+    }
+
+    if (asPath === "/notes/saved") {
+      buttonList.push({
+        title: "보관 해제하기",
+        icon: <FaUpload />,
+        onClick: function (): void {
+          save(
+            { tabId: selectedTabId, isSaved: false },
+            {
+              onSuccess: () => {
+                toast.success("노트로 이동되었습니다.");
+                void trpc.tab.savedList.invalidate();
               },
             }
           );
