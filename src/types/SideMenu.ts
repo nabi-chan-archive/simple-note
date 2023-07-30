@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 
 export type Button = {
+  disabled?: boolean;
   title: string;
   onClick: () => void;
   modal?: ReactNode;

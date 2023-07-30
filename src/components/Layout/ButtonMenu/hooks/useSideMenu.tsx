@@ -19,7 +19,8 @@ export function useSideMenu() {
   const { data: printer } = api.printer.getPrinter.useQuery(undefined, {
     enabled: status === "authenticated",
   });
-  const { mutate: print } = api.printer.printArticle.useMutation();
+  const { mutate: print, isLoading: isPrinting } =
+    api.printer.printArticle.useMutation();
 
   const [isOpen, toggleOpen] = useCycle(false, true);
 
@@ -46,6 +47,7 @@ export function useSideMenu() {
 
     if (printer && asPath === "/notes") {
       buttonList.push({
+        disabled: isPrinting,
         title: "프린트하기",
         icon: <FaPrint />,
         onClick: function (): void {
