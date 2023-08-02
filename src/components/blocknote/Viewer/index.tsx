@@ -6,7 +6,7 @@ import {
 import { useBlockNote, BlockNoteView } from "@blocknote/react";
 
 import { customBlockSchema } from "../blockSchema";
-import { slashCommands } from "../slashCommands";
+// import { slashCommands } from "../slashCommands";
 
 type ViewerProps = {
   initialContent: PartialBlock<BlockSchema>[];
@@ -17,7 +17,7 @@ export default function Viewer({ initialContent }: ViewerProps) {
     {
       editable: false,
       initialContent: initialContent ?? [],
-      slashCommands,
+      // slashCommands,
       blockSchema: {
         ...defaultBlockSchema,
         ...customBlockSchema,

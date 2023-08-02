@@ -1,14 +1,15 @@
 import {
+  defaultBlockSchema,
   type BlockNoteEditor,
   type BlockSchema,
-  defaultBlockSchema,
 } from "@blocknote/core";
 import { useBlockNote } from "@blocknote/react";
 import { debounce } from "throttle-debounce";
 
-import { customBlockSchema } from "@/components/blocknote/blockSchema";
-import { slashCommands } from "@/components/blocknote/slashCommands";
 import { api } from "@/utils/api";
+
+import { customBlockSchema } from "../blockSchema";
+import { slashCommands } from "../slashCommands";
 
 type useEditorArgs = {
   disabled?: boolean;
@@ -32,7 +33,7 @@ export function useEditor(
   const editor = useBlockNote(
     {
       editable: !disabled,
-      initialContent: initialContent ?? [],
+      initialContent: initialContent,
       onEditorContentChange: debounce(
         750,
         (editor: BlockNoteEditor<BlockSchema>) => {
@@ -42,7 +43,7 @@ export function useEditor(
           });
         }
       ),
-      slashCommands,
+      slashMenuItems: [...slashCommands],
       blockSchema: {
         ...defaultBlockSchema,
         ...customBlockSchema,

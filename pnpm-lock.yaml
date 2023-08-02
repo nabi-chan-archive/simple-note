@@ -6,11 +6,11 @@ settings:
 
 dependencies:
   '@blocknote/core':
-    specifier: ^0.8.2
-    version: 0.8.2(prosemirror-model@1.19.3)(prosemirror-state@1.4.3)(prosemirror-view@1.31.6)
+    specifier: ^0.9.2
+    version: 0.9.2
   '@blocknote/react':
-    specifier: ^0.8.2
-    version: 0.8.2(@tiptap/core@2.0.4)(@tiptap/pm@2.0.4)(@types/react@18.2.15)(prosemirror-model@1.19.3)(prosemirror-state@1.4.3)(prosemirror-view@1.31.6)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^0.9.2
+    version: 0.9.2(@tiptap/pm@2.0.4)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
   '@hookform/resolvers':
     specifier: ^3.1.1
     version: 3.1.1(react-hook-form@7.45.2)
@@ -493,6 +493,7 @@ packages:
   /@babel/plugin-proposal-export-namespace-from@7.18.9(@babel/core@7.22.9):
     resolution: {integrity: sha512-k1NtHyOMvlDDFeb9G5PhUXuGj8m/wiwojgQVEhJ/fsVsMCpLyOP4h0uGEjYJKrRI+EVPlb5Jk+Gt9P97lOGwtA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-export-namespace-from instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -513,6 +514,7 @@ packages:
   /@babel/plugin-proposal-unicode-property-regex@7.18.6(@babel/core@7.22.9):
     resolution: {integrity: sha512-2BShG/d5yoZyXZfVePH91urL5wTG6ASZU9M4o03lKK8u8UW1y08OMttBSOADTcJrnPMpvDXRG3G8fyLh4ovs8w==}
     engines: {node: '>=4'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-unicode-property-regex instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -1419,8 +1421,8 @@ packages:
       '@babel/helper-validator-identifier': 7.22.5
       to-fast-properties: 2.0.0
 
-  /@blocknote/core@0.8.2(prosemirror-model@1.19.3)(prosemirror-state@1.4.3)(prosemirror-view@1.31.6):
-    resolution: {integrity: sha512-dJSUsv/6iZjMKAAL4Pib13yWhtFjHWkZr5EJ9w9KvyvNC+QEGQ7K9Teabw9Tu7M2+eif94qhpr76ryalfcdEmg==}
+  /@blocknote/core@0.9.2:
+    resolution: {integrity: sha512-yjkJ4BhQiaZ5U3c9F1bTTuozOAIdSL3upMINcxN90hS3rpSgf0ypJRKCF/N1GBHL+wt2hy1c7edzA5/IuvYOjA==}
     dependencies:
       '@emotion/cache': 11.11.0
       '@emotion/serialize': 1.1.2
@@ -1444,6 +1446,10 @@ packages:
       '@tiptap/pm': 2.0.4(@tiptap/core@2.0.4)
       hast-util-from-dom: 4.2.0
       lodash: 4.17.21
+      prosemirror-model: 1.19.3
+      prosemirror-state: 1.4.3
+      prosemirror-transform: 1.7.3
+      prosemirror-view: 1.31.6
       rehype-parse: 8.0.4
       rehype-remark: 9.1.2
       rehype-stringify: 9.0.3
@@ -1457,35 +1463,32 @@ packages:
       y-protocols: 1.0.5
       yjs: 13.6.7
     transitivePeerDependencies:
-      - prosemirror-model
-      - prosemirror-state
-      - prosemirror-view
       - supports-color
     dev: false
 
-  /@blocknote/react@0.8.2(@tiptap/core@2.0.4)(@tiptap/pm@2.0.4)(@types/react@18.2.15)(prosemirror-model@1.19.3)(prosemirror-state@1.4.3)(prosemirror-view@1.31.6)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-t/Ad/bS5MsieoKj0KEcDLTytj7p6bbJGTNgg6cjpUS/BC5LfbqU/UQZVtugeXHJ8+esnXw6BOz0CyC4HIjcJ1g==}
+  /@blocknote/react@0.9.2(@tiptap/pm@2.0.4)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-C2pmRMcog/MKsVsAx80IowZaZQS0BKQWM8JR3sstRezJonau5/ixY4BiMI4ko0Pmr45LxIyAgQSEFL7bqoemUg==}
     peerDependencies:
       react: ^18
       react-dom: ^18
     dependencies:
-      '@blocknote/core': 0.8.2(prosemirror-model@1.19.3)(prosemirror-state@1.4.3)(prosemirror-view@1.31.6)
+      '@blocknote/core': 0.9.2
       '@emotion/react': 11.11.1(@types/react@18.2.15)(react@18.2.0)
       '@mantine/core': 5.10.5(@emotion/react@11.11.1)(@mantine/hooks@5.10.5)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/hooks': 5.10.5(react@18.2.0)
-      '@mantine/utils': 6.0.16(react@18.2.0)
+      '@mantine/utils': 6.0.17(react@18.2.0)
       '@tippyjs/react': 4.2.6(react-dom@18.2.0)(react@18.2.0)
+      '@tiptap/core': 2.0.4(@tiptap/pm@2.0.4)
       '@tiptap/react': 2.0.4(@tiptap/core@2.0.4)(@tiptap/pm@2.0.4)(react-dom@18.2.0)(react@18.2.0)
+      lodash: 4.17.21
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-icons: 4.10.1(react@18.2.0)
+      tippy.js: 6.3.7
+      use-prefers-color-scheme: 1.1.3(react@18.2.0)
     transitivePeerDependencies:
-      - '@tiptap/core'
       - '@tiptap/pm'
       - '@types/react'
-      - prosemirror-model
-      - prosemirror-state
-      - prosemirror-view
       - supports-color
     dev: false
 
@@ -2307,21 +2310,12 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@mantine/utils@6.0.16(react@18.2.0):
-    resolution: {integrity: sha512-UFel9DbifL3zS8pTJlr6GfwGd6464OWXCJdUq0oLydgimbC1VV2PnptBr6FMwIpPVcxouLOtY1cChzwFH95PSA==}
-    peerDependencies:
-      react: '>=16.8.0'
-    dependencies:
-      react: 18.2.0
-    dev: false
-
   /@mantine/utils@6.0.17(react@18.2.0):
     resolution: {integrity: sha512-U6SWV/asYE6NhiHx4ltmVZdQR3HwGVqJxVulhOylMcV1tX/P1LMQUCbGV2Oe4O9jbX4/YW5B/CBb4BbEhENQFQ==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
       react: 18.2.0
-    dev: true
 
   /@mapbox/node-pre-gyp@1.0.11:
     resolution: {integrity: sha512-Yhlar6v9WQgUp/He7BdgzOz8lqMQ8sU+jkCq7Wx8Myc5YFJLbEe7lgui/V7G1qB1DJykHSGwreceSaD60Y0PUQ==}
@@ -10792,6 +10786,15 @@ packages:
     resolution: {integrity: sha512-g66/K7ZQGYrI6dy8GLpVcMsBp4s17xNkYJVSMvTEevGy3nDxHOfE6z8BVE22+5G5x7t3+bhzrlTDB7ObrEE0cQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /use-prefers-color-scheme@1.1.3(react@18.2.0):
+    resolution: {integrity: sha512-ZRgDfb5BFLum/Sud4SpZ+d1YcV+lRbsupw0qQ/rGy5kGrpE3KMUQgEQOKiQQSa4Wslex46n5fKFO+9FGMTosUQ==}
+    engines: {node: '>=8', npm: '>=5'}
+    peerDependencies:
+      react: '>= 16.8.0'
     dependencies:
       react: 18.2.0
     dev: false

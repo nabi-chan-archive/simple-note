@@ -1,11 +1,12 @@
-import { ReactSlashMenuItem } from "@blocknote/react";
+import { type BlockSchema } from "@blocknote/core";
+import { type ReactSlashMenuItem } from "@blocknote/react";
 import { AiOutlineDash } from "react-icons/ai";
 import { RiH1, RiText, RiListCheck, RiListOrdered } from "react-icons/ri";
 
-export const slashCommands = [
-  new ReactSlashMenuItem(
-    "Heading",
-    (editor) => {
+export const slashCommands: ReactSlashMenuItem<BlockSchema>[] = [
+  {
+    name: "소제목",
+    execute: (editor) => {
       editor.updateBlock(editor.getTextCursorPosition().block, {
         type: "heading",
         props: {
@@ -13,71 +14,70 @@ export const slashCommands = [
         },
       });
     },
-    ["heading", "head", "title", "h"],
-    "Text",
-    <RiH1 />,
-    "제목을 만듭니다"
-  ),
-  new ReactSlashMenuItem(
-    "Paragraph",
-    (editor) => {
+    aliases: [],
+    shortcut: "Ctrl+Alt+1",
+    group: "Text",
+    icon: <RiH1 />,
+    hint: "소제목을 만듭니다",
+  },
+  {
+    name: "본문",
+    execute: (editor) => {
       editor.updateBlock(editor.getTextCursorPosition().block, {
         type: "paragraph",
       });
     },
-    ["paragraph", "text", "content", "p"],
-    "Text",
-    <RiText />,
-    "본문을 만듭니다"
-  ),
-
-  new ReactSlashMenuItem(
-    "Bullet List",
-    (editor) => {
+    aliases: ["paragraph", "text", "content", "p"],
+    group: "Text",
+    icon: <RiText />,
+    hint: "본문을 만듭니다",
+  },
+  {
+    name: "순서가 없는 목록",
+    execute: (editor) => {
       editor.updateBlock(editor.getTextCursorPosition().block, {
         type: "bulletListItem",
       });
     },
-    ["list", "bullet", "ul"],
-    "List",
-    <RiListCheck />,
-    "순서가 없는 목록을 만듭니다"
-  ),
-  new ReactSlashMenuItem(
-    "Numbered List",
-    (editor) => {
+    aliases: ["list", "bullet", "ul"],
+    group: "List",
+    icon: <RiListCheck />,
+    hint: "순서가 없는 목록을 만듭니다",
+  },
+  {
+    name: "순서가 있는 목록",
+    execute: (editor) => {
       editor.updateBlock(editor.getTextCursorPosition().block, {
-        type: "numberedListItem",
+        type: "orderedListItem",
       });
     },
-    ["list", "numbered", "ol"],
-    "List",
-    <RiListOrdered />,
-    "순서가 있는 목록을 만듭니다"
-  ),
-
-  new ReactSlashMenuItem(
-    "Single Line",
-    (editor) => {
+    aliases: ["ordered", "ol"],
+    group: "List",
+    icon: <RiListOrdered />,
+    hint: "순서가 있는 목록을 만듭니다",
+  },
+  {
+    name: "한줄 구분선",
+    execute: (editor) => {
       editor.updateBlock(editor.getTextCursorPosition().block, {
         type: "singleLine",
       });
     },
-    ["line", "singe", "---"],
-    "Line",
-    <AiOutlineDash />,
-    "한줄짜리 구분선을 만듭니다."
-  ),
-  new ReactSlashMenuItem(
-    "Double Line",
-    (editor) => {
+    aliases: ["line", "singe", "---", "hr"],
+    group: "Line",
+    icon: <AiOutlineDash />,
+    hint: "구분선을 만듭니다",
+  },
+  {
+    name: "두줄 구분선",
+    execute: (editor) => {
       editor.updateBlock(editor.getTextCursorPosition().block, {
         type: "doubleLine",
       });
     },
-    ["line", "double", "==="],
-    "Line",
-    <AiOutlineDash />,
-    "두줄짜리 구분선을 만듭니다."
-  ),
+    aliases: ["line", "double", "===", "hr"],
+    group: "Line",
+    icon: <AiOutlineDash />,
+    hint: "구분선을 만듭니다",
+  },
 ];
