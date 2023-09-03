@@ -45,9 +45,14 @@ function renderBlock(
 
   // render heading
   if (block.type === "heading") {
-    const { level } = block.props;
-    const size = 4 - Number(level);
-    printer.setTextSize(size, size);
+    switch (block.props.level) {
+      case "2": {
+        printer.setTextSize(1, 1);
+      }
+      case "3": {
+        printer.bold(true);
+      }
+    }
   }
 
   // render bulletListItem
