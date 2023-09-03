@@ -42,7 +42,7 @@ export function useTabList() {
   };
 
   const getTabFromId = (id: string) => {
-    return tabList.find((item) => item.id === id) as Tab;
+    return (tabList ?? dataTabList).find((item) => item.id === id) as Tab;
   };
 
   const currentTab = getTabFromId(currentTabId) ?? (tabList[0] as Tab);
@@ -117,6 +117,7 @@ export function useTabList() {
       setCurrentTab(dataTabList[0]);
     } else {
       setCurrentTabId(lastSelectedTab);
+      setCurrentTab(getTabFromId(lastSelectedTab));
     }
   }
 
