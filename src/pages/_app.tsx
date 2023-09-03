@@ -9,7 +9,6 @@ import { JetBrains_Mono } from "next/font/google";
 import Head from "next/head";
 import Script from "next/script";
 import { type Session } from "next-auth";
-import { useSession } from "next-auth/react";
 
 import ChannelTalkProvider from "@/components/ChannelTalk";
 import { env } from "@/env.mjs";
@@ -27,10 +26,6 @@ const ToastContainer = dynamic(() =>
 );
 
 const ErrorBoundary = dynamic(() => import("@/components/ErrorBoundary"));
-
-const ChannelTalk = dynamic(() => import("@/components/ChannelTalk"), {
-  ssr: false,
-});
 
 const jetbrainsMono = JetBrains_Mono({
   weight: "variable",

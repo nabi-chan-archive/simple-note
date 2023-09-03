@@ -44,6 +44,7 @@ export default function SettingPrinter() {
   const handlePrinterDelete = () => {
     deletePrinter(
       {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         id: printer!.id,
       },
       {

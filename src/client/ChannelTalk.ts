@@ -9,8 +9,11 @@ declare global {
 }
 
 interface IChannelIO {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   c?: (...args: any) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   q?: [methodName: string, ...args: any[]][];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (...args: any): void;
 }
 
