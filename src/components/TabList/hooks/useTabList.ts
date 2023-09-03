@@ -117,7 +117,7 @@ export function useTabList() {
       setCurrentTab(dataTabList[0]);
     } else {
       setCurrentTabId(lastSelectedTab);
-      setCurrentTab(getTabFromId(lastSelectedTab));
+      setTab(lastSelectedTab);
     }
   }
 
