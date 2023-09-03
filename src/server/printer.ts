@@ -139,6 +139,11 @@ function renderContent(printer: ThermalPrinter, content: InlineContent[]) {
           return;
         }
 
+        if (key === "strike") {
+          printer.print("(완료) ");
+          return;
+        }
+
         throw new Error("invalid style");
       });
 
