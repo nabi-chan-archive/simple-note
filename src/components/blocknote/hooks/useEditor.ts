@@ -33,7 +33,7 @@ export function useEditor(
   const editor = useBlockNote(
     {
       editable: !disabled,
-      initialContent: initialContent,
+      initialContent: initialContent?.length ? initialContent : undefined,
       onEditorContentChange: debounce(
         750,
         (editor: BlockNoteEditor<BlockSchema>) => {
