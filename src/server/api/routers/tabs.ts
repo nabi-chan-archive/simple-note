@@ -16,6 +16,7 @@ export const tabRouter = createTRPCRouter({
       select: {
         id: true,
         title: true,
+        createdAt: true,
       },
       orderBy: {
         order: "asc",

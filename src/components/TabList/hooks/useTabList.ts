@@ -63,7 +63,10 @@ export function useTabList() {
       {
         onSuccess: () => {
           setTabList((prev) => {
-            const newArray = [...prev, { id, title: "무제" }];
+            const newArray = [
+              ...prev,
+              { id, title: "무제", createdAt: new Date() },
+            ];
             setCurrentTab(newArray[newArray.length - 1]);
             return newArray;
           });
