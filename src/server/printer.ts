@@ -165,56 +165,58 @@ export const print = async ({ ip, port, title, blocks }: printArgs) => {
 
   if (!isConnected) throw new Error("프린터와 연결되어 있지 않습니다.");
 
-  renderBlock(printer, {
-    id: "title",
-    type: "heading",
-    props: {
-      textColor: "default",
-      backgroundColor: "default",
-      textAlignment: "left",
-      level: "3",
-    },
-    children: [],
-    content: [
-      {
-        type: "text",
-        text: title,
-        styles: {},
+  if (title !== "무제") {
+    renderBlock(printer, {
+      id: "title",
+      type: "heading",
+      props: {
+        textColor: "default",
+        backgroundColor: "default",
+        textAlignment: "left",
+        level: "2",
       },
-    ],
-  });
-
-  renderBlock(printer, {
-    id: "paragraph",
-    type: "paragraph",
-    props: {
-      textColor: "default",
-      backgroundColor: "default",
-      textAlignment: "left",
-    },
-    children: [],
-    content: [
-      {
-        type: "text",
-        text: dayjs().tz("Asia/Seoul").format("YYYY년 MM월 DD일 HH시 mm분"),
-        styles: {
-          bold: true,
+      children: [],
+      content: [
+        {
+          type: "text",
+          text: title,
+          styles: {},
         },
-      },
-    ],
-  });
+      ],
+    });
 
-  renderBlock(printer, {
-    id: "doubleLine",
-    type: "doubleLine",
-    props: {
-      textColor: "default",
-      backgroundColor: "default",
-      textAlignment: "left",
-    },
-    children: [],
-    content: [],
-  });
+    renderBlock(printer, {
+      id: "paragraph",
+      type: "paragraph",
+      props: {
+        textColor: "default",
+        backgroundColor: "default",
+        textAlignment: "left",
+      },
+      children: [],
+      content: [
+        {
+          type: "text",
+          text: dayjs().tz("Asia/Seoul").format("YYYY년 MM월 DD일 HH시 mm분"),
+          styles: {
+            bold: true,
+          },
+        },
+      ],
+    });
+
+    renderBlock(printer, {
+      id: "doubleLine",
+      type: "doubleLine",
+      props: {
+        textColor: "default",
+        backgroundColor: "default",
+        textAlignment: "left",
+      },
+      children: [],
+      content: [],
+    });
+  }
 
   blocks.forEach((item) => renderBlock(printer, item));
 
