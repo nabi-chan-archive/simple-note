@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import {
+  BreakLine,
   CharacterSet,
   PrinterTypes,
   ThermalPrinter,
@@ -128,6 +129,8 @@ function renderContent(printer: ThermalPrinter, content: InlineContent[]) {
       const { text } = content;
 
       Object.entries(content.styles).forEach(([key, value]) => {
+        printer.setTextNormal();
+
         // Bold
         if (key === "bold") {
           if (value === true) printer.bold(true);
@@ -147,15 +150,15 @@ function renderContent(printer: ThermalPrinter, content: InlineContent[]) {
         throw new Error("invalid style");
       });
 
-      return printer.println(text);
+      printer.print(text);
     }
 
     if (content.type === "link") {
-      return renderContent(printer, content.content);
+      renderContent(printer, content.content);
     }
-
-    throw new Error("invalid content type");
   });
+
+  printer.println("");
 }
 
 export const print = async ({ ip, port, title, blocks }: printArgs) => {
@@ -163,7 +166,8 @@ export const print = async ({ ip, port, title, blocks }: printArgs) => {
     type: PrinterTypes.EPSON,
     interface: `tcp://${ip}:${port}`,
     characterSet: CharacterSet.KOREA,
-    removeSpecialCharacters: false,
+    removeSpecialCharacters: false, // Set character for lines - default: "-"
+    breakLine: BreakLine.NONE,
     lineCharacter: "=",
     width: 42,
     options: {
